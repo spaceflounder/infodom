@@ -2,35 +2,9 @@
 
 book.title = () => {
     
-    useCmd(
-        'no',
-        `No no no`,
-        () => `Noooo!!`
-    )
-
-    useCmd(
-        'frog',
-        `Hello Frog`,
-        () =>
-`
-
-The frog isn’t speaking to you.
-:restricted
-
-`
-    )
-
-    useCmd(
-        'hello',
-        `Hello World`,
-        () => `Hello back.`
-    )
-
-    useRestricted(['yes', 'hello', 'frog'])
-
     return `
 
-# The Penumbra of Anubis
+# Arrr!
 ### a game by spacflounder
 
 :::dropcap

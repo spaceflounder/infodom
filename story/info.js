@@ -1,10 +1,10 @@
 
 const info = {
 
-    title: `The Penumbra of Anubis`,
+    title: `Arrr!`,
     author: `spaceflounder`,
     email: `spaceflounder@hotmail.com`,
-    firstPage: 'intro'
+    firstPage: 'intro',
 
 }
 

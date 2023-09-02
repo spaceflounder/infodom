@@ -1,8 +1,9 @@
+import * as denopack from
+"https://deno.land/x/denopack@0.9.0/vendor/terser@5.3.0/terser.ts";
 import denoliver from 'https://deno.land/x/denoliver/mod.ts'
-import * as denopack from "https://deno.land/x/denopack@0.9.0/vendor/terser@5.3.0/terser.ts";
+import { debounce } from "https://deno.land/std@0.194.0/async/debounce.ts";
 
-
-const port = 8080;
+let output = ''
 
 function getExt(path: string) {
 
@@ -102,41 +103,66 @@ async function compress(fileContent: string[], fileName: string[]) {
 }
 
 
-async function refreshset() {
+function b64(story) {
 
-    const fileContent: string[] = [];
-    const fileName: string[] = [];
-    await scan('src', fileContent, fileName);
+    let x = 0;
+    while(true) {
+
+        x = story.indexOf('`', x);
+        if (x === -1) {
+            return story;
+        }
+        let a = x;
+        x = story.indexOf('`', x);
+        let b = x;
+        const sub = story.substring(a, b);
+        story = story.replace(sub, `"${atob(sub)}"`);
+
+    }
+
+}
+
+
+async function refreshset(setStory: (s: string) => void) {
+
+    const fileName: string[] = ['engine.js'];
+    const ng = await Deno.readTextFile('engine.js');
+    const fileContent: string[] = [ng];
+    await scan('story', fileContent, fileName);
    
     const code = await compress(fileContent, fileName);
 
     const story = `
-        ${micromarkHeader()}
-        ${globalObjectList()}
         ${code}
     `;
-    await Deno.writeTextFile('./dist/adv.min.js', story);
+
+    setStory(story);
 
 }
 
 
 async function checksrc() {
 
-    const watcher = Deno.watchFs("src");
+    const watcher = Deno.watchFs("story");
+
+    const ref = debounce((event: Deno.FsEvent) => {
+        refreshset(s => Deno.writeTextFile('./dist/adv.min.js', s));
+    }, 200);
 
     for await (const event of watcher) {
       if (event) {
-        await refreshset();
+       ref();
       }
     }
 
 }
 
+
 export function run() {
 
-    denoliver({ root: 'dist', port, cors: true })
-    refreshset();
+    refreshset(s => Deno.writeTextFile('./dist/adv.min.js', s));
     checksrc();
+    const server = denoliver({ root: 'dist', port: 6060, cors: true })
 
 }
 

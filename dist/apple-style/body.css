@@ -1,9 +1,9 @@
 
 body {
   overflow-x: hidden;
-  background-image: url('wood.png');
+  background: #eeeeee;
   color-scheme: dark light;
-  color: #D5CEA3;
+  color: #666666;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

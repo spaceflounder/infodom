@@ -10,21 +10,30 @@
 
 
 .input {
-  color: #E5E5CB;
-  background-color: rgba(0, 0, 0, 0.85);
+  color: #000000;
+  background-color: #eeeeee;
   text-align: center;
   border: none transparent;
   outline: none;
+  font-size: x-large;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-weight: 400;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   border-radius: 1em;
   margin-top: 1px;
   padding: 1em;
-  width: 78vw;
-  background: linear-gradient(1, #1A120B, #1A120B);
-  box-shadow: 20px 20px 50px #3C2A21, 
-            -30px -30px 60px #1A120B;
+}
+
+
+.command-line {
+    background-color: #eeeeee;
+    color: #000000;
+    border-width: 0px;
+    outline: none;
+    font-family: sans-serif;
+    font-size: x-large;
+    text-align: center;
 }
 
 
@@ -40,15 +49,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: medium;
-  font-family: 'Libre Baskerville', Georgia, Palatino, Baskerville, Cambria, Cochin, Garamond, Times, "Times New Roman", serif;
 }
 
 
 .preview-content {
-    color: #e2e2e2;
+    color: #000000;
     animation-name: fade-in;
     animation-duration: 0.5s;
+    background-color: #cccccc;
+    border-radius: 1em;
+    padding: 0.5em;
 }
 
 
@@ -78,26 +88,13 @@
   font-size: 200%;
   line-height: 50%;
   margin-right: 3px;
-
-  color: #BE975F;
+  color: #0088cc;
   text-shadow: 2px 2px 5px #1a1a1a;
 }
 
 
-.command-line {
-    background-color: rgba(0,0,0,0);
-    color: #D5CEA3;
-    border-width: 0px;
-    border-bottom-width: 1px;
-    outline: none;
-    font-family: 'Poppins';
-    font-size: x-large;
-    text-align: center;
-}
-
-
 .response {
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: #eeeeee;
   max-width: 60ch;
   margin-top: 1em;
   width: 80vw;
@@ -106,9 +103,9 @@
   padding-top: 0.4em;
   padding-bottom: 1.5em;
   border-radius: 0.5em;
-  background: linear-gradient(1, #1A120B, #1A120B);
-  box-shadow: 20px 20px 50px #3C2A21, 
-            -30px -30px 60px #1A120B;
+  background: linear-gradient(1, #dddddd, #cccccc);
+  box-shadow: 20px 20px 50px #cccccc, 
+            -30px -30px 60px #dddddd;
   opacity: 1;
   animation: fade 0.25s;
 }
