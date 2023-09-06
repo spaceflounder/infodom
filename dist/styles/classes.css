@@ -1,54 +1,68 @@
 
-.output {
-  width: 100vw;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  display: flex;
-  padding-bottom: 3em;
-}
-
-
-.input {
-  color: #E5E5CB;
-  background-color: rgba(0, 0, 0, 0.85);
-  text-align: center;
-  border: none transparent;
-  outline: none;
-  font-weight: 400;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  border-radius: 1em;
-  margin-top: 1px;
+.main {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  max-width: 60ch;
+  width: 80vw;
   padding: 1em;
-  width: 78vw;
-  background: linear-gradient(1, #1A120B, #1A120B);
-  box-shadow: 20px 20px 50px #3C2A21, 
-            -30px -30px 60px #1A120B;
+  padding-top: 0.75em;
+  border-top-style: solid;
+  border-left-style: solid;
+  border-radius: 1em;
+  border-width: 1px;
+  border-top-color: #E19898;
+  border-left-color: #E19898;
+  box-shadow: 10px 10px 5px #121212;
+  background: rgb(23,12,21);
+  background: linear-gradient(127deg, 
+    rgba(23,12,21,1) 0%,
+    rgba(63,29,56,1) 100%);
+  animation-name: fade-in;
+  animation-duration: 0.25s;
 }
 
 
 .preview {
-  height: 4em;
+  height: 2em;
   justify-content: center;
   align-items: center;
-  margin-left: 3em;
-  margin-right: 3em;
-  margin-bottom: 3vh;
-  padding-left: 1em;
-  padding-right: 1em;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: medium;
-  font-family: 'Libre Baskerville', Georgia, Palatino, Baskerville, Cambria, Cochin, Garamond, Times, "Times New Roman", serif;
+  text-align: center;
 }
 
 
 .preview-content {
-    color: #e2e2e2;
-    animation-name: fade-in;
-    animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  animation-name: fade-in;
+}
+
+
+.heading {
+  background-color: #121212;
+  padding: 0.25em;
+  border-radius: 0.5em;
+  margin-bottom: 0.25em;
+  font-family: 'Poppins', serif;
+  text-align: center;
+}
+
+
+.entry-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+  width: 100%;
+}
+
+
+.tip {
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 1em;
+  border-radius: 0.25em;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 
@@ -84,32 +98,4 @@
 }
 
 
-.command-line {
-    background-color: rgba(0,0,0,0);
-    color: #D5CEA3;
-    border-width: 0px;
-    border-bottom-width: 1px;
-    outline: none;
-    font-family: 'Poppins';
-    font-size: x-large;
-    text-align: center;
-}
-
-
-.response {
-  background-color: rgba(0, 0, 0, 0.85);
-  max-width: 60ch;
-  margin-top: 1em;
-  width: 80vw;
-  padding-left: 2vw;
-  padding-right: 2vw;
-  padding-top: 0.4em;
-  padding-bottom: 1.5em;
-  border-radius: 0.5em;
-  background: linear-gradient(1, #1A120B, #1A120B);
-  box-shadow: 20px 20px 50px #3C2A21, 
-            -30px -30px 60px #1A120B;
-  opacity: 1;
-  animation: fade 0.25s;
-}
 

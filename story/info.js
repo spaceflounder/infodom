@@ -5,6 +5,7 @@ const info = {
     author: `spaceflounder`,
     email: `spaceflounder@hotmail.com`,
     firstPage: 'intro',
+    helpPage: 'helpPage',
 
 }
 

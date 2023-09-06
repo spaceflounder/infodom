@@ -2,11 +2,13 @@
 import { micromark } from 'https://esm.sh/micromark@3?bundle'
 import { directive, directiveHtml } from 'https://esm.sh/micromark-extension-directive@3?bundle'
 
+
 var book = {};
 var scene = {};
 
 /* public access api */
 let useCmd = (cmd, preview, callback) => {}; 
+let useGlobalCmd = (cmd, preview, callback) => {}; 
 let useNav = (cmd, preview, callback) => {};
 let useTopic = (topic) => {};
 let useFirst = (callback) => {};
@@ -15,8 +17,9 @@ let useLeave = (callback) => {};
 let useRestricted = (cmds) => {};
 let useMdl = () => {};
 let sendTo = (newPage) => {};
-let getState = (name) => '';
-let setState = (state, name) => {};
+let getPhase = (name) => '';
+let setPhase = (phase, name) => {};
+let usePhase = (phase, callback) => {};
 let useChapter = (name) => {};
 
 
@@ -97,11 +100,15 @@ function __run_engine() {
     /* current game page, or active function */
     let page = () => {};
 
-    /* state management tracker */
-    let stateManager = {};
+    /* phase management tracker */
+    let phaseManager = {};
+
+    /* current phase output */
+    let phaseOutput = undefined;
 
     let activeCommand = '';
     let commands = {};
+    let gblcmds = {};
     let persCmds = {};
     let lastPreview = '';
     let leave = [];
@@ -132,10 +139,10 @@ function __run_engine() {
     }
 
 
-    getState = (name) => {
+    getPhase = (name) => {
 
         const n = (name) ? name : mdl.page;
-        const s = stateManager[n] ?? 'default';
+        const s = phaseManager[n] ?? 'default';
         return s;
 
     }
@@ -143,17 +150,35 @@ function __run_engine() {
 
     /**
      * 
-     * setState
-     * Set state (or mode) of page. If no page is 
+     * setPhase
+     * Set phase (or mode) of page. If no page is 
      * specified, the current page will be applied.
      * 
-     * @param {string} state 
+     * @param {string} phase 
      * @param {string} name 
      */
-    setState = (state, name) => {
+    setPhase = (phase, name) => {
 
         const n = (name) ? name : mdl.page;
-        stateManager[n] = state;
+        phaseManager[n] = phase;
+
+    }
+
+
+    usePhase = (phase, callback) => {
+        
+        const n = getPhase();
+        if (phase === n) {
+            phaseOutput = callback();
+        }
+
+    }
+
+
+    useGlobalCmd = (cmd, preview, callback) => {
+
+        const c = nospace(cmd.toLowerCase().trim());
+        gblcmds[c] = [preview, callback];
 
     }
 
@@ -220,7 +245,7 @@ function __run_engine() {
 
         let primaryOutput = '';
         let secondaryOutput = '';
-        commands = {};
+        commands = { ...gblcmds };
         page = book[newPage];
         mdl.page = newPage;
         primaryOutput = page();
@@ -248,7 +273,7 @@ function __run_engine() {
     /**
      * useMdl()
      *
-     * Get the modal, or story state, for manipulation by other functions.
+     * Get the model, or story state, for manipulation by other functions.
      * InfoDom attempts to keep this clean by avoiding functions or callbacks
      * in this object, so it can be serialized.
      */
@@ -271,7 +296,7 @@ function __run_engine() {
 
     function getImplAddr(options) {
 
-        const s = getState();
+        const s = getPhase();
         const n = mdl.page ?? 'default';
         return `${n}-${s}`;
 
@@ -280,7 +305,7 @@ function __run_engine() {
 
     function getOutAddr(options) {
 
-        const s = getState();
+        const s = getPhase();
         const n = mdl.page ?? 'default';
         const c = (activeCommand) ? `-${activeCommand}` : '';
         return `${n}-${s}${c}`;
@@ -353,49 +378,59 @@ function __run_engine() {
         content = clean(content);
 
         function dropcap(d) {
-            const content = d.content
+            const text = d.content
                 .replace('<p>', '')
                 .replace('</p>', '');
             this.tag('<div class="drop-cap">');
-            this.tag(content);
+            this.tag(text);
             this.tag('</div>');
         }
 
 
         function aside(d) {
-            const content = d.content
+            const text = d.content
                 .replace('<p>', '')
                 .replace('</p>', '');
-            this.tag('<aside>');
-            this.tag(content);
-            this.tag('</aside>');
+            this.tag('<div class="tip">');
+            this.tag(text);
+            this.tag('</div>');
         }
 
 
         function kbd(d) {
-            const content = d.label;
+            const text = d.label;
             this.tag('<kbd>');
-            this.tag(content);
+            this.tag(text);
             this.tag('</kbd>');
         }
 
 
+        function heading(d) {
+            const text = d.content
+                .replace('<p>', '')
+                .replace('</p>', '');
+            this.tag('<div class="heading">');
+            this.tag(text);
+            this.tag('</div>');
+        }
+
+
         function topics(d) {
-            const content = buildTopicsContent();
-            if (content) {
-                this.tag('<aside>');
-                this.tag(content);
-                this.tag('</aside>');
+            const text = buildTopicsContent();
+            if (text) {
+                this.tag('<div class="tip">');
+                this.tag(text);
+                this.tag('</div>');
             }
         }
 
 
         function restricted(d) {
-            const content = buildRestContent();
-            if (content) {
-                this.tag('<aside>');
-                this.tag(content);
-                this.tag('</aside>');
+            const text = buildRestContent();
+            if (text) {
+                this.tag('<div class="tip">');
+                this.tag(text);
+                this.tag('</div>');
             }
         }
 
@@ -407,6 +442,7 @@ function __run_engine() {
                 dropcap,
                 aside,
                 kbd,
+                heading,
                 topics,
                 restricted,
             })]
@@ -428,7 +464,7 @@ function __run_engine() {
         const e = document.getElementById('output');
         const p = document.getElementById('preview');
         const div = document.createElement('div');
-        div.className = 'response';
+        div.className = 'main';
         div.append(...resp);
         resp = [];
         p.innerHTML = '';
@@ -454,10 +490,11 @@ ${impl[addr]['callback']()}
 
 `;
 
-    const getFormattedBlock = (preview, result) => `
+    const getFormattedBlock = (preview, result) => `            
 
-### ${preview}            
-
+:::heading
+${preview}
+:::
 ${result}
 
 `;
@@ -469,10 +506,14 @@ ${result}
             const [preview, callback] = commands[c];
             activeCommand = c;
             let result = callback();
+            if (phaseOutput) {
+                result = phaseOutput;
+            }
             const f = handleFirstOutput();
             if (f) {
                 result = f;
             }
+            phaseOutput = undefined;
             if (checkImpl()) {
                 const addr = getImplAddr();
                 const actions = impl[addr]['cmds'];
@@ -506,7 +547,7 @@ ${result}
     function loadSys() {
 
         const e = document.getElementById('output');
-        const f = document.getElementById('input');
+        const f = document.getElementById('entry-form');
         if (e) {
             e.innerHTML = '';
         }
@@ -547,6 +588,7 @@ ${result}
     addEventListener('load', () => {
 
         document.title = info.title;
+        useGlobalCmd('help', `Help`, () => book[info.helpPage]());
         loadSys();
         watchInput();
         pr(sendTo(info.firstPage));

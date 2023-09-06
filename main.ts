@@ -1,9 +1,7 @@
 import * as denopack from
 "https://deno.land/x/denopack@0.9.0/vendor/terser@5.3.0/terser.ts";
-import denoliver from 'https://deno.land/x/denoliver/mod.ts'
 import { debounce } from "https://deno.land/std@0.194.0/async/debounce.ts";
 
-let output = ''
 
 function getExt(path: string) {
 
@@ -31,22 +29,6 @@ async function scan(path: string, fileContent: string[], fileName: string[]) {
   }
 
 }
-
-
-const micromarkHeader = () => `
-
-import { micromark } from 'https://esm.sh/micromark@3?bundle'
-import { directive, directiveHtml } from 'https://esm.sh/micromark-extension-directive@3?bundle'
-
-`;
-
-
-const globalObjectList = () => `
-
-var book = {};
-var scene = {};
-
-`;
 
 
 type ErrorType = {
@@ -103,25 +85,6 @@ async function compress(fileContent: string[], fileName: string[]) {
 }
 
 
-function b64(story) {
-
-    let x = 0;
-    while(true) {
-
-        x = story.indexOf('`', x);
-        if (x === -1) {
-            return story;
-        }
-        let a = x;
-        x = story.indexOf('`', x);
-        let b = x;
-        const sub = story.substring(a, b);
-        story = story.replace(sub, `"${atob(sub)}"`);
-
-    }
-
-}
-
 
 async function refreshset(setStory: (s: string) => void) {
 
@@ -145,14 +108,12 @@ async function checksrc() {
 
     const watcher = Deno.watchFs("story");
 
-    const ref = debounce((event: Deno.FsEvent) => {
+    const ref = debounce((_event) => {
         refreshset(s => Deno.writeTextFile('./dist/adv.min.js', s));
     }, 200);
 
     for await (const event of watcher) {
-      if (event) {
-       ref();
-      }
+       ref(event);
     }
 
 }
@@ -162,7 +123,9 @@ export function run() {
 
     refreshset(s => Deno.writeTextFile('./dist/adv.min.js', s));
     checksrc();
+    /*
     const server = denoliver({ root: 'dist', port: 6060, cors: true })
+    */
 
 }
 

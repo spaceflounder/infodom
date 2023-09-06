@@ -21,9 +21,6 @@ book.intro = () => {
     )
 
     return `
-
-### One Night in the Caribbean
-
 :::dropcap
 There’s nought a free room or bed in the whole village,” said the innkeeper.
 He was a stocky fellow, with a fatuous nose and a mustache to match.

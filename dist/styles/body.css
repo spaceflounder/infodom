@@ -1,9 +1,9 @@
 
 body {
   overflow-x: hidden;
-  background-image: url('wood.png');
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #1d1d1d;
   color-scheme: dark light;
-  color: #D5CEA3;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -39,5 +39,17 @@ body {
     font-size: larger;
   }
 
+}
+
+
+input {
+  border:0;
+  outline:0;
+  border-radius: 1em;
+  padding: 3px;
+  background-color: black;
+}
+input:focus {
+  outline:none!important;
 }
 
