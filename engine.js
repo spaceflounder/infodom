@@ -7,19 +7,101 @@ var book = {};
 var scene = {};
 
 /* public access api */
-let useCmd = (cmd, preview, callback) => {}; 
-let useGlobalCmd = (cmd, preview, callback) => {}; 
+
+/**
+ * This callback is displayed as a global member.
+ * @callback stringCallback:string
+ */
+
+/**
+ * Set a command to be used in the current story context.
+ * @param {string} cmd Command to enter to get result.
+ * @param {string} preview Preview of command.
+ * @param {stringCallback} callback Result action.
+ */
+let useCmd = (cmd, preview, callback) => {};
+
+/**
+ * Set a command to work regardless of context.
+ * @param {string} cmd Command to get result.
+ * @param {string} preview Preview of command.
+ * @param {stringCallback} callback Result action.
+ */
+let useGlobalCmd = (cmd, preview, callback) => {};
+
+/**
+ * Set a story navigation command.
+ * @param {string} cmd Command to execute navigation.
+ * @param {string} preview Navigation action preview.
+ * @param {stringCallback} callback Navigation result.
+ */
 let useNav = (cmd, preview, callback) => {};
+
+/**
+ * Set a topic for this context. A topic can be called without this.
+ * @param {string} topic Set a suggested topic for this context. 
+ */
 let useTopic = (topic) => {};
+
+/**
+ * Use a callback to display content before the common text is displayed.
+ * @param {stringCallback} callback Display this callback result first. 
+ */
 let useFirst = (callback) => {};
+
+/**
+ * Trigger implicit action on command(s).
+ * @param {stringCallback} callback Callback to show on implicit action. 
+ * @param {string[]} cmds Commands to trigger implicit action.
+ */
 let useImplicit = (callback, cmds) => {};
+
+/**
+ * Trigger callback on navigation to another context.
+ * @param {stringCallback} callback Callback to show on leave of context. 
+ */
 let useLeave = (callback) => {};
+
+/**
+ * Permit only specified commands as input.
+ * @param {string[]} cmds Restrict input to only these commands. 
+ */
 let useRestricted = (cmds) => {};
+
+/**
+ * Get the current story model (mdl) as JS object.
+ * @returns {Object} The mdl object.
+ */
 let useMdl = () => {};
+
+/**
+ * 
+ * @param {string} newPage Navigate to new story page.
+ */
 let sendTo = (newPage) => {};
+
+/**
+ * Get phase of page.
+ * @param {string} name Optional. If passed, will get phase for page by name. 
+ * @returns 
+ */
 let getPhase = (name) => '';
+
+/**
+ * Set phase of page.
+ * @param {string} phase Set phase of page.
+ * @param {string} name Optional. If not passed, will affect current page.
+ */
 let setPhase = (phase, name) => {};
+
+/**
+ * Use phase for this page.
+ * @param {string} phase Phase, identified by string.
+ * @param {stringCallback} callback Callback of phase, when active.
+ */
 let usePhase = (phase, callback) => {};
+
+
 let useChapter = (name) => {};
 
 
