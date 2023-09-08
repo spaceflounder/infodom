@@ -26,7 +26,6 @@ book.prologue = () => {
     );
     */
 
-
     return `
 
 “*Anything* will do,” I said with no small measure of desperation. “Please,

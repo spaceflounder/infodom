@@ -48,6 +48,7 @@ input {
   border-radius: 1em;
   padding: 3px;
   background-color: black;
+  font-size: 125%;
 }
 input:focus {
   outline:none!important;
