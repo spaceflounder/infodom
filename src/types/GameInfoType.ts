@@ -1,4 +1,4 @@
-import { contents } from "../../story/contents.ts";
+import { contents } from "../contents.ts";
 
 export type GameInfoType = {
     title: string;

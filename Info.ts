@@ -1,5 +1,5 @@
 
-import { GameInfoType } from '../src/types/GameInfoType.ts';
+import { GameInfoType } from './src/types/GameInfoType.ts';
 
 export const Info: GameInfoType = {
     title: 'Arrr!',
