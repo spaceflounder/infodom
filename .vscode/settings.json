@@ -4,5 +4,8 @@
     "deno.unstable": true,
     "editor.rulers": [
         80, 120
+    ],
+    "cSpell.words": [
+        "infodom"
     ]
 }
