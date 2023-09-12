@@ -1,4 +1,3 @@
-
 import { resolve } from 'node:path';
 
 export default {
@@ -8,6 +7,7 @@ export default {
       '@infodom': resolve(__dirname, 'infodom'),
       '#root': resolve(__dirname)
     }
-  }  
+  },
+  base: './'
 
 }
