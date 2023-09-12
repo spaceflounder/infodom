@@ -268,7 +268,7 @@ button:focus-visible {
   align-items: center;
   overflow-x: none;
   overflow-y: none;
-  margin-left: 1em;
+  padding-left: 1em;
 }
 
 
@@ -289,7 +289,7 @@ button:focus-visible {
   align-items: center;
   overflow-x: auto;
   overflow-y: hidden;
-  margin-left: 1em;
+  padding-left: 1em;
 }
 
 

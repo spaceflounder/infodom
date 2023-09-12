@@ -38,27 +38,13 @@ export function hookUseFirst(callback: () => string) {
 
 
 export function clearOutput() {
-    /*
-    const output = document.querySelector<HTMLDivElement>('#output-wrapper')!;
     const inner = document.querySelector<HTMLDivElement>('#output-inner')!;
-    const n = document.createElement('div');
-    n.innerHTML = inner.innerHTML;
-    n.id = 'output-inner-fadeout';
-    output.innerHTML = '';
-    output.append(n);
-    */
-   let c = '';
-    const inner = document.querySelector<HTMLDivElement>('#output-inner')!;
-    if (inner) {
-        c = inner.innerHTML;
-    }
     const output = document.querySelector<HTMLDivElement>('#output-wrapper')!;
     output.innerHTML = '';
     const n = document.createElement('div');
     n.innerHTML = inner.innerHTML;
     n.id = 'output-inner-fadeout';
     output.append(n);
-
 }
 
 
@@ -74,9 +60,6 @@ export function rebuildDisplay(content: string) {
 
 
 export function refreshOutput() {
-    const output = document.querySelector<HTMLDivElement>('#output-wrapper')!;
-    const element = document.createElement('div');
-    element.id = 'output-inner';
     const st = getState();
     const room = getCurrentRoom();
     const addr = `${st}-${room}`;
@@ -97,7 +80,6 @@ export function refreshOutput() {
 
 
 export function displayOutput(content: string) {
-    const output = document.querySelector<HTMLDivElement>('#output-inner')!;
     const st = getState();
     const room = getCurrentRoom();
     const sym = getLastCommandSymbol();

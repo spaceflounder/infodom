@@ -1,10 +1,10 @@
-import { clearAllCommands, getCommandList } from "./Commands.ts";
+import { getCommandList } from "./Commands.ts";
 import { MarkPrint } from "./Mark.ts";
 import { displayOutput } from "./OutputManager.ts";
 import { CommandType } from "./types/CommandType.ts";
 
 
-let commandStack = '';
+let permitInput = true;
 
 
 const arrows: { [key: string]: string }  = {
@@ -95,6 +95,7 @@ function createCommandFade(c: CommandType, index: number) {
 function executeCommand(c: CommandType) {
 
     wipeAnimation();
+    permitInput = false;
     
     setTimeout(() => {
         const content = c.callback();
@@ -104,7 +105,8 @@ function executeCommand(c: CommandType) {
        fadeAnimation();
        setTimeout(() => {
           refreshInputManager();
-       }, 2000);
+          permitInput = true;
+       }, 1200);
     }, 490);
     
 }
@@ -143,7 +145,6 @@ export function refreshInputManager() {
     element.append(upperRow);
     element.append(lowerRow);
 }
-
 
 
 export function fadeAnimation() {
@@ -201,13 +202,15 @@ function processKey(c: string) {
 
 export function setupInputManager() {
     document.addEventListener('keyup', e => {
-        const key = processKey(e.key);
-        const commands = getCommandList();
-        for (const c of commands) {
-            if (c.id === key) {
-                executeCommand(c);
-                return;
-            }
+        if (permitInput) {
+            const key = processKey(e.key);
+            const commands = getCommandList();
+            for (const c of commands) {
+                if (c.id === key) {
+                    executeCommand(c);
+                    return;
+                }
+            }    
         }
     });
 }

@@ -1,11 +1,15 @@
 import { CommandType } from "./types/CommandType.ts";
 
-
+let restrictedCommands: string[] = [];
 let commands: CommandType[] = [];
 let lastCommandSymbol = '';
 
 export function getCommandList() {
-    return commands;
+    if (restrictedCommands.length === 0) {
+        return commands;
+    } else {
+        return commands.filter(c => restrictedCommands.indexOf(c.id) > -1);
+    }
 }
 
 export function getLastCommandSymbol() {
@@ -14,6 +18,7 @@ export function getLastCommandSymbol() {
 
 export function clearAllCommands() {
     commands = [];
+    restrictedCommands = [];
 }
 
 function fixArrows(c: CommandType) {
@@ -60,6 +65,12 @@ export function hookUseNavCommand(
     fixArrows(c);
     commands = [...commands, c];
 }
+
+
+export function hookUseRestricted(restricted: string[]) {
+    restrictedCommands = restricted;
+}
+
 
 
 export function hookUseTopicCommand(

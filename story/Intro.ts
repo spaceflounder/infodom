@@ -1,4 +1,4 @@
-import { useCmd, useNav, useTopic } from "@infodom";
+import { sendTo, useCmd, useNav } from "@infodom";
 
 
 const helpResponse = () => `
@@ -16,9 +16,8 @@ spoken topic for conversation with a game character.
 
 export default function() {
 
-    useNav('up', `Proceed`, () => 'success');
+    useNav('up', `Proceed`, () => sendTo('Prologue'));
     useCmd('?', `Help`, helpResponse);
-    useTopic('q', 'Parrots?', () => `Hello world`)
 
     return `
 
