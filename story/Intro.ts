@@ -20,9 +20,7 @@ export default function() {
     useCmd('?', `Help`, helpResponse);
 
     return `
-
-Avast mateys! It be too late to alter course.
-:::aside
+:::dropcap
 Ahoy there! If this be yer first voyage, type :kbd[?] or click the Help
 button to get yer bearings. Otherwise, hit the Arrow Up key to venture into
 uncharted waters...

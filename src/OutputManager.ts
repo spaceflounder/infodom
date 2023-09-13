@@ -1,4 +1,4 @@
-import { contents } from "../story/contents.ts";
+import { contents } from "./contents.ts";
 import { getLastCommandSymbol } from "./Commands.ts";
 import { MarkPrint } from "./Mark.ts";
 import { getCurrentRoom } from "./Navigation.ts";
@@ -11,22 +11,26 @@ const firstManager: {[key: string]: boolean} = {}
 const stateManager: {[key: string]: string} = {}
 
 
-export function getState() {
+export function hookGetState() {
     const r = getCurrentRoom();
     const s = stateManager[r] ?? 'default';
     return s;
 }
 
 
-export function setState(stateName: string, roomName?: keyof typeof contents) {
+export function hookSetState(stateName: string, roomName?: keyof typeof contents) {
     const r = roomName ?? getCurrentRoom();
     stateManager[r] = stateName;
 }
 
 
-export function hookUseState(stateName: string, callback: () => string) {
-    const st = getState();
-    if (st === stateName) {
+export function hookUseState(callback: () => string) {
+    const st = hookGetState();
+    if (callback.name === '') {
+        throw `Runtime error: State callback must have a name
+ in function ${getCurrentRoom()}.`
+    }
+    if (st === callback.name) {
         stateOutput = callback();
     }
 }
@@ -60,7 +64,7 @@ export function rebuildDisplay(content: string) {
 
 
 export function refreshOutput() {
-    const st = getState();
+    const st = hookGetState();
     const room = getCurrentRoom();
     const addr = `${st}-${room}`;
     clearOutput();
@@ -80,7 +84,7 @@ export function refreshOutput() {
 
 
 export function displayOutput(content: string) {
-    const st = getState();
+    const st = hookGetState();
     const room = getCurrentRoom();
     const sym = getLastCommandSymbol();
     const addr = `${room}-${st}-${sym}`;

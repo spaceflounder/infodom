@@ -1,10 +1,15 @@
 import { CommandType } from "./types/CommandType.ts";
 
+let returnLocalCommandsOnly = false;
+let localCommands: string[] = [];
 let restrictedCommands: string[] = [];
 let commands: CommandType[] = [];
 let lastCommandSymbol = '';
 
 export function getCommandList() {
+    if (returnLocalCommandsOnly) {
+        return commands.filter(c => localCommands.indexOf(c.id) > -1);
+    }
     if (restrictedCommands.length === 0) {
         return commands;
     } else {
@@ -21,10 +26,40 @@ export function clearAllCommands() {
     restrictedCommands = [];
 }
 
+
+function addLocalCommand(id: string) {
+    localCommands.push(id);
+}
+
+
 function fixArrows(c: CommandType) {
     if (c.id.indexOf('arrow') > -1) {
         c.id = c.id.replace('arrow', '');
     }
+}
+
+
+export function hookUseProceed(
+    id: string,
+    callback: () => void | string
+) {
+    const c = {
+        id,
+        preview: '',
+        callback,
+        options: {
+            check: true
+        },
+    }
+    fixArrows(c);
+    addLocalCommand(id);
+    commands = commands.filter(x => x.id !== c.id);
+    commands = [...commands, c];
+    /*
+<span class="material-symbols-rounded">
+check_circle
+</span>
+    */
 }
 
 
@@ -37,11 +72,14 @@ export function hookUseCommand(
         id,
         preview,
         callback: () => {
+            returnLocalCommandsOnly = false;
             lastCommandSymbol = id;
             return callback();
         }
     }
     fixArrows(c);
+    addLocalCommand(id);
+    commands = commands.filter(x => x.id !== c.id);
     commands = [...commands, c];
 }
 
@@ -55,6 +93,7 @@ export function hookUseNavCommand(
         id,
         preview,
         callback: () => {
+            returnLocalCommandsOnly = false;
             lastCommandSymbol = id;
             return callback();
         },
@@ -63,6 +102,8 @@ export function hookUseNavCommand(
         },
     }
     fixArrows(c);
+    addLocalCommand(id);
+    commands = commands.filter(x => x.id !== c.id);
     commands = [...commands, c];
 }
 
@@ -71,6 +112,11 @@ export function hookUseRestricted(restricted: string[]) {
     restrictedCommands = restricted;
 }
 
+
+export function hookUseLocal() {
+    returnLocalCommandsOnly = true;
+    localCommands = [];
+}
 
 
 export function hookUseTopicCommand(
@@ -82,6 +128,7 @@ export function hookUseTopicCommand(
         id,
         preview,
         callback: () => {
+            returnLocalCommandsOnly = false;
             lastCommandSymbol = id;
             return callback();
         },
@@ -90,5 +137,7 @@ export function hookUseTopicCommand(
         },
     }
     fixArrows(c);
+    addLocalCommand(id);
+    commands = commands.filter(x => x.id !== c.id);
     commands = [...commands, c];
 }

@@ -30,6 +30,11 @@ function isTopicCommand(c: CommandType) {
 }
 
 
+function isCheckCommand(c: CommandType) {
+    return (c.options?.check) ? true : false;
+}
+
+
 function createCommandKey(c: CommandType) {
     const element = document.createElement('div');
     const inner = document.createElement('div');
@@ -40,6 +45,18 @@ function createCommandKey(c: CommandType) {
         second.className = 'command-key';
         first.className = 'command-key';
         second.innerHTML = `<span class="material-symbols-rounded">chat</span>`;
+        first.innerHTML = `${k}`;
+        inner.className = 'inner-key-wrapper';
+        inner.append(second);
+        inner.append(first);
+    } else if (isCheckCommand(c)) {
+        const second = document.createElement('div');
+        const first = document.createElement('div');
+        second.className = 'command-key';
+        first.className = 'command-key';
+        second.innerHTML = `<span class="material-symbols-rounded">
+        check_circle
+        </span>`;
         first.innerHTML = `${k}`;
         inner.className = 'inner-key-wrapper';
         inner.append(second);
@@ -73,7 +90,9 @@ function createCommandWipe(c: CommandType) {
     const p = createCommandPreview(c.preview);
     element.className = 'command-wrapper-wipe';
     element.append(k);
-    element.append(p);
+    if (!isCheckCommand(c)) {
+        element.append(p);
+    }
     return element;
 }
 
@@ -87,7 +106,9 @@ function createCommandFade(c: CommandType, index: number) {
     element.className = 'command-wrapper-fade';
     element.style.animationDuration = `${sec}ms`;
     element.append(k);
-    element.append(p);
+    if (!isCheckCommand(c)) {
+        element.append(p);
+    }
     return element;
 }
 
@@ -107,10 +128,9 @@ function executeCommand(c: CommandType) {
           refreshInputManager();
           permitInput = true;
        }, 1200);
-    }, 490);
+    }, 450);
     
 }
-
 
 
 function createCommandButton(c: CommandType) {
@@ -120,7 +140,9 @@ function createCommandButton(c: CommandType) {
     const p = createCommandPreview(c.preview);
     element.onclick = () => executeCommand(c);
     element.append(k);
-    element.append(p);
+    if (!isCheckCommand(c)) {
+        element.append(p);
+    }
     return element;
 }
 

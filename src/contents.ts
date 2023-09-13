@@ -1,17 +1,17 @@
 
 import Intro from '../story/Intro.ts';
-import Info from '../story/Info.ts';
 import Prologue from '../story/Prologue.ts';
-import FindAnInn from '../story/FindAnInn.ts';
-import SleepOnBeach from '../story/SleepOnBeach.ts';
-import InPrisonWithAnne from '../story/InPrisonWithAnne.ts';
-import ToJailFromBeach from '../story/ToJailFromBeach.ts';
+import FindAnInn from '../story/Chapter1/FindAnInn.ts';
+import InPrisonWithAbby from '../story/Chapter1/InPrisonWithAbby.ts';
+import SleepOnBeach from '../story/Chapter1/SleepOnBeach.ts';
+import ToJailFromBeach from '../story/Chapter1/ToJailFromBeach.ts';
+import SleepOnTheStreet from '../story/Chapter1/SleepOnTheStreet.ts';
 export const contents = {
 Intro,
-Info,
 Prologue,
 FindAnInn,
+InPrisonWithAbby,
 SleepOnBeach,
-InPrisonWithAnne,
-ToJailFromBeach
+ToJailFromBeach,
+SleepOnTheStreet
 }

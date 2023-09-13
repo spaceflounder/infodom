@@ -2,8 +2,12 @@ import { sendTo, useNav } from "@infodom";
 
 export default function() {
 
-    useNav('s', `Sleep on the Beach`, () => {
+    useNav('down', `Sleep on the Beach`, () => {
         sendTo('SleepOnBeach')
+    })
+
+    useNav('right', `Sleep on the Street`, () => {
+        sendTo('SleepOnTheStreet')
     })
 
     return `
