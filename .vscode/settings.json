@@ -1,11 +1,10 @@
 {
-    "deno.enable": true,
-    "deno.lint": true,
-    "deno.unstable": true,
-    "editor.rulers": [
-        80, 120
-    ],
     "cSpell.words": [
-        "infodom"
+        "infodom",
+        "Jaro",
+        "Winkler"
+    ],
+    "editor.rulers": [
+        80,120
     ]
 }

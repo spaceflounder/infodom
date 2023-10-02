@@ -3,7 +3,6 @@
   "remote": {},
   "npm": {
     "specifiers": {
-      "@types/node": "@types/node@18.16.19",
       "vite": "vite@4.4.9"
     },
     "packages": {
@@ -93,10 +92,6 @@
       },
       "@esbuild/win32-x64@0.18.19": {
         "integrity": "sha512-z69jhyG20Gq4QL5JKPLqUT+eREuqnDAFItLbza4JCmpvUnIlY73YNjd5djlO7kBiiZnvTnJuAbOjIoZIOa1GjA==",
-        "dependencies": {}
-      },
-      "@types/node@18.16.19": {
-        "integrity": "sha512-IXl7o+R9iti9eBW4Wg2hx1xQDig183jj7YLn8F7udNceyfkbn1ZxmzZXuak20gR40D7pIkIY1kYGx5VIGbaHKA==",
         "dependencies": {}
       },
       "esbuild@0.18.19": {
