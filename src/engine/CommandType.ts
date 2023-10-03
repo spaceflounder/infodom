@@ -2,5 +2,5 @@
 export type CommandType = {
     keyword: string,
     preview: string,
-    action: () => string | undefined,
+    action: () => string | void,
 }

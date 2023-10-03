@@ -1,9 +1,8 @@
 
-/* 
- * Place synonyms for command game commands here. By default, ? can be used
- * as a synonym for the help command.
+/* Place synonyms in this listing for keywords. By default, ? is a
+ * synonym for the Help command.
  */
 
-export default {
-    'help': ['?'],
+export const synonymTable = {
+    "help": ["?"],
 }

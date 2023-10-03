@@ -1,6 +1,7 @@
 import { contents } from "../contents.ts";
-import { finishPerformingNavigation, getState, setLocation } from "./DataSystem.ts";
+import { finishPerformingNavigation, setLocation } from "./DataSystem.ts";
 import { pmsg, postBufferEmpty } from "./Output.ts";
+
 
 export function sendTo(dest: keyof typeof contents) {
 

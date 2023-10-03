@@ -4,6 +4,7 @@
     "deno.unstable": true,
     "cSpell.words": [
         "bmsg",
+        "imsg",
         "infodom",
         "Jaro",
         "pmsg",

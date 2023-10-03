@@ -1,7 +1,8 @@
 
 import { info } from '../../Info.ts';
+import universalListing from '../../universalListing.ts';
 import { contents } from "../contents.ts";
-import { cleanKeyword, clearCommandBuffer, getActionByKeyword, getPreviewByKeyword } from './CommandSystem.ts';
+import { checkImplicitCommands, cleanKeyword, clearCommandBuffer, getActionByKeyword, getPreviewByKeyword } from './CommandSystem.ts';
 import { getLocation } from './DataSystem.ts';
 import { sendTo } from './Navigation.ts';
 import { bmsg, displayBufferEmpty, dump, setCommandPreview } from "./Output.ts";
@@ -12,6 +13,7 @@ function beginGame() {
     const e = document.getElementById('output')!;
     const f = document.getElementById('entry-form')!;
     e.innerHTML = '';
+    universalListing();
     sendTo(info.firstLocation);
     dump();
     f.onsubmit = ev => {
@@ -20,6 +22,7 @@ function beginGame() {
         const k = cleanKeyword(i.value);
         const action = getActionByKeyword(k);
         if (action) {
+            checkImplicitCommands(k);
             const location = getLocation();
             clearCommandBuffer();
             contents[location]();

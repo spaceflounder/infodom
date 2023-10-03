@@ -3,18 +3,31 @@ import { info } from "../../Info.ts"
 import { contents } from "../contents.ts";
 import { clearCommandBuffer } from "./CommandSystem.ts";
 import { GameDataType } from "./GameDataType.ts"
+import { stringToHash } from "./Hash.ts";
 import { bmsg, pmsg } from "./Output.ts";
 
 
 let performingNavigation = false;
 
-const data: GameDataType = {
+let data: GameDataType = {
 
     location: info.firstLocation,
     visitTracker: {},
     stateTracker: {},
+    implicitTracker: {},
     data: {},
 
+}
+
+
+export function resetData() {
+    data = {
+        location: info.firstLocation,
+        visitTracker: {},
+        stateTracker: {},
+        implicitTracker: {},
+        data: {},    
+    }
 }
 
 
@@ -45,10 +58,10 @@ export function useState(state: string, action: () => string | undefined) {
 }
 
 
-export function getMarker() {
+export function getMarker(v = '') {
     const l = data.location;
     const s = getState();
-    return `${l}-${s}`;
+    return stringToHash(`${l}-${s}-${v}`);
 }
 
 
@@ -71,6 +84,11 @@ export function finishPerformingNavigation() {
 
 export function getVisitTracker() {
     return data.visitTracker;
+}
+
+
+export function getImplicitTracker() {
+    return data.implicitTracker;
 }
 
 

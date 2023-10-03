@@ -6,5 +6,6 @@ export type GameDataType = {
     location: keyof typeof contents;
     visitTracker: any,
     stateTracker: any,
+    implicitTracker: any,
     data: any;
 }

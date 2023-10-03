@@ -1,7 +1,10 @@
 import { CommandType } from "./CommandType.ts";
 import { stringSimilarity } from "./FuzzyStringCompare.ts";
-import synonymTable from "../../synonymTable.js";
+import { synonymTable } from "../../synonymTable.js";
 import { info } from "../../Info.ts";
+import { getImplicitTracker, getMarker } from "./DataSystem.ts";
+import { impBufferEmpty, imsg } from "./Output.ts";
+import { appendUniversalCommands } from "./UniversalCommand.ts";
 
 let implicitTriggers: string[] = [];
 let implicitAction: (() => string | void) | undefined = undefined;
@@ -23,14 +26,34 @@ function getHelpCommand(): CommandType {
 
 export function clearCommandBuffer() {
     commands = [getHelpCommand()];
+    appendUniversalCommands();
     implicitTriggers = [];
     implicitAction = undefined;
 }
 
 
 export function useImplicit(commands: string[], action: () => string | undefined) {
-    implicitTriggers = commands;
+    implicitTriggers = commands.map(x => cleanKeyword(x));
     implicitAction = action;
+}
+
+
+export function checkImplicitCommands(keyword: string) {
+
+    const k = cleanKeyword(keyword);
+    const implicitTracker = getImplicitTracker();
+    const marker = getMarker(implicitTriggers.join('-'));
+    const i = implicitTriggers.indexOf(k);
+    if (!implicitTracker[marker]) {
+        if (i > -1 && implicitAction) {
+            const a = implicitAction();
+            implicitTracker[marker] = true;
+            if (a && impBufferEmpty()) {
+                imsg(a);
+            }
+        }
+    }
+
 }
 
 
@@ -94,13 +117,13 @@ export function getActionByKeyword(keyword: string) {
  * @param {function} action - Action to execute for this command.
  * 
  */
-export function useCmd(keyword: string, preview: string, action: () => string) {
+export function useCmd(keyword: string, preview: string, action: () => string | void) {
 
     const cmd: CommandType = {
         keyword: cleanKeyword(keyword),
         preview,
         action
-    }
+    };
     commands = commands.filter(x => x.keyword !== keyword);
     commands = [...commands, cmd];
 

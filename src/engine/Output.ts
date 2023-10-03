@@ -3,6 +3,7 @@ import { getVisitTracker, getMarker } from "./DataSystem.ts";
 import { MarkPrint } from "./Mark.ts";
 
 // buffer of items awaiting display to next display dump.
+let impBuffer: string[] = [];
 let buffer: string[] = [];
 let postBuffer: string[] = [];
 let firstBuffer = '';
@@ -16,12 +17,28 @@ export function useFirst(content: () => string) {
     const f = visitTracker[m] ?? 0;
     if (f === 0) {
         const c = content();
-        firstBuffer = MarkPrint(c);
+        firstBuffer = c;
         visitTracker[m] = 1;
     } else {
         visitTracker[m] += 1;
     }
 
+}
+
+
+/**
+ *
+ * Add message to implicit buffer. Will not display until next display dump.
+ *
+ */
+export function imsg(content: string) {
+
+    if (firstBuffer !== '') {
+        content = firstBuffer;
+        firstBuffer = '';
+    }
+    impBuffer = [...impBuffer, content];
+    
 }
 
 
@@ -35,8 +52,6 @@ export function bmsg(content: string) {
     if (firstBuffer !== '') {
         content = firstBuffer;
         firstBuffer = '';
-    } else {
-        content = MarkPrint(content);
     }
     buffer = [...buffer, content];
     
@@ -55,11 +70,14 @@ export function pmsg(content: string) {
     if (firstBuffer !== '') {
         content = firstBuffer;
         firstBuffer = '';
-    } else {
-        content = MarkPrint(content);
     }
     postBuffer = [...postBuffer, content];
     
+}
+
+
+export function impBufferEmpty() {
+    return impBuffer.length === 0;
 }
 
 
@@ -94,8 +112,10 @@ export function dump() {
         commandHeader.innerHTML = commandPreview;
         div.append(commandHeader);
     }
-    div.innerHTML += buffer.join() + postBuffer.join();
+    const t = MarkPrint(impBuffer.join() + buffer.join() + postBuffer.join());
+    div.innerHTML += t;
     commandPreview = '';
+    impBuffer = [];
     buffer = [];
     postBuffer = [];
     p.innerHTML = '';

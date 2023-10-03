@@ -8,15 +8,13 @@ import {
 
 function clean(lines) {
 
-    const l = lines.split('\n');
-    return l.map(x => x.trim()).join('\n');
+    const l = lines.split('\n\n');
+    return l.map(x => x.trim());
 
 }
 
 
 export function print(content) {
-
-    content = clean(content);
 
     function dropcap(d) {
         const text = d.content
@@ -82,7 +80,7 @@ export function print(content) {
         }
     }
 
-    let s = micromark(content, {
+    return micromark(content, {
         extensions: [directive()],
         htmlExtensions: [directiveHtml({
             dropcap,
@@ -93,14 +91,6 @@ export function print(content) {
             topics,
             restricted,
         })]
-    });
-
-    if (s.length < 60) {
-        s = s.replace('<p>', '')
-        s = s.replace('</p>', '');
-    }
-
-    return s;
-
+    });    
 }
 
