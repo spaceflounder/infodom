@@ -1,21 +1,46 @@
-import { CommandType } from "./CommandType";
-import { stringSimilarity } from "./FuzzyStringCompare";
+import { CommandType } from "./CommandType.ts";
+import { stringSimilarity } from "./FuzzyStringCompare.ts";
+import synonymTable from "../../synonymTable.js";
+import { info } from "../../Info.ts";
 
-
+let implicitTriggers: string[] = [];
+let implicitAction: (() => string | void) | undefined = undefined;
 let commands: CommandType[] = [];
-let synonyms = new Map<string, string[]>();
 
-function clean(s: string) {
+export function cleanKeyword(s: string) {
     return s.replace(/\s/g, "").toLocaleLowerCase();
+}
+
+
+function getHelpCommand(): CommandType {
+    return {
+        keyword: 'help',
+        preview: 'Help',
+        action: () => info.helpText
+    }
+}
+
+
+export function clearCommandBuffer() {
+    commands = [getHelpCommand()];
+    implicitTriggers = [];
+    implicitAction = undefined;
+}
+
+
+export function useImplicit(commands: string[], action: () => string | undefined) {
+    implicitTriggers = commands;
+    implicitAction = action;
 }
 
 
 function synonymCheck(s: string) {
 
-    for (const k of synonyms.keys()) {
-        const words = synonyms.get(k) ?? [];
+    let k: keyof typeof synonymTable;
+    for (k in synonymTable) {
+        const words: string[] = synonymTable[k] ?? [];
         for (const word of words) {
-            let w = clean(word);
+            const w = cleanKeyword(word);
             if (stringSimilarity(s, w) > 0.55) {
                 return k;
             }
@@ -28,8 +53,8 @@ function synonymCheck(s: string) {
 
 function fuzzyKeyCompare(s1: string, s2: string) {
 
-    s1 = clean(s1);
-    s2 = clean(s2);
+    s1 = cleanKeyword(s1);
+    s2 = cleanKeyword(s2);
     const possibleSynonym = synonymCheck(s2);
     if (possibleSynonym) {
         s2 = possibleSynonym;
@@ -39,17 +64,8 @@ function fuzzyKeyCompare(s1: string, s2: string) {
 }
 
 
-export function addSynonym(keyword: string, word: string) {
-
-    let words = synonyms.get(clean(keyword)) ?? [];
-    words = [...new Set([...words, clean(word)])];
-    synonyms.set(clean(keyword), words);
-
-}
-
-
 export function getPreviewByKeyword(keyword: string) {
-    
+
     const c = commands.filter(x => fuzzyKeyCompare(x.keyword, keyword));
     if (c.length > 0) {
         return c[0].preview;
@@ -70,13 +86,23 @@ export function getActionByKeyword(keyword: string) {
 }
 
 
-export function useCmd(keyword: string, preview: string, action: () => void) {
+/**
+ * 
+ * Add command to current command context.
+ * @param {string} keyword - Primary keyword to trigger command.
+ * @param {string} preview - Command preview to display before action.
+ * @param {function} action - Action to execute for this command.
+ * 
+ */
+export function useCmd(keyword: string, preview: string, action: () => string) {
 
     const cmd: CommandType = {
-        keyword,
+        keyword: cleanKeyword(keyword),
         preview,
         action
     }
+    commands = commands.filter(x => x.keyword !== keyword);
+    commands = [...commands, cmd];
 
 }
 

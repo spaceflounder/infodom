@@ -1,19 +1,39 @@
 
-import { info } from '../../info';
+import { info } from '../../Info.ts';
+import { contents } from "../contents.ts";
+import { cleanKeyword, clearCommandBuffer, getActionByKeyword, getPreviewByKeyword } from './CommandSystem.ts';
+import { getLocation } from './DataSystem.ts';
+import { sendTo } from './Navigation.ts';
+import { bmsg, displayBufferEmpty, dump, setCommandPreview } from "./Output.ts";
 
-/**
- * loadsys()
- *
- * Load game systems.
- */
-function loadSys() {
+
+function beginGame() {
 
     const e = document.getElementById('output')!;
     const f = document.getElementById('entry-form')!;
     e.innerHTML = '';
+    sendTo(info.firstLocation);
+    dump();
     f.onsubmit = ev => {
         ev.preventDefault();
         const i = <HTMLInputElement>document.getElementById('command-line')!;
+        const k = cleanKeyword(i.value);
+        const action = getActionByKeyword(k);
+        if (action) {
+            const location = getLocation();
+            clearCommandBuffer();
+            contents[location]();
+            const preview = getPreviewByKeyword(k);
+            const result = action();
+            if (preview) {
+                setCommandPreview(preview);
+            }
+            if (result && displayBufferEmpty()) {
+                bmsg(result);
+            }
+            dump();
+            i.value = '';
+        }
     };
 
 }
@@ -22,30 +42,27 @@ function loadSys() {
 
 export function start() {
     
+    let lastPreview = '';
+
     function watchInput() {
 
         const e = document.getElementById('preview')!;
         const f = <HTMLInputElement>document.getElementById('command-line')!;
-        const c = f.value;
-        /*
-        if (commands[c]) {
-            const pre = commands[c][0];
-            if (pre && lastPreview !== pre) {
+        const k = cleanKeyword(f.value);
+        const preview = getPreviewByKeyword(k);
+        if (preview) {
+            if (lastPreview !== preview) {
                 e.innerText = '';
                 const div = document.createElement('div');
-                lastPreview = pre;
+                lastPreview = preview;
                 div.className = 'preview-content';
-                div.append(pre);
+                div.append(preview);
                 e.append(div);
             }
         } else {
             e.innerText = '';
             lastPreview = '';
         }
-        */
-        setTimeout(() => {
-            watchInput();
-        }, 100);
 
     }
 
@@ -55,9 +72,10 @@ export function start() {
 
         document.title = info.title;
         //useGlobalCmd('help', `Help`, () => book[info.helpPage]());
-        loadSys();
-        watchInput();
-        //dump(sendTo(info.firstPage));
+        beginGame();
+        setInterval(() => {
+            watchInput();
+        }, 100);
 
     });
 
