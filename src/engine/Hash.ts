@@ -4,7 +4,7 @@ export function stringToHash(str: string) {
     let i = 0;
     let hash = 0;    
     if (str.length == 0) {
-        return hash;
+        return hash.toString();
     }
     for (i = 0; i < str.length; i++) {
         const char = str.charCodeAt(i);

@@ -5,7 +5,8 @@ import { contents } from "../contents.ts";
 import { checkImplicitCommands, cleanKeyword, clearCommandBuffer, getActionByKeyword, getPreviewByKeyword } from './CommandSystem.ts';
 import { getLocation } from './DataSystem.ts';
 import { sendTo } from './Navigation.ts';
-import { bmsg, displayBufferEmpty, dump, setCommandPreview } from "./Output.ts";
+import { bmsg, dump, setCommandPreview } from "./Output.ts";
+import { handleTimers } from './TimerSystem.ts';
 
 
 function beginGame() {
@@ -22,6 +23,7 @@ function beginGame() {
         const k = cleanKeyword(i.value);
         const action = getActionByKeyword(k);
         if (action) {
+            handleTimers();
             checkImplicitCommands(k);
             const location = getLocation();
             clearCommandBuffer();
@@ -31,7 +33,7 @@ function beginGame() {
             if (preview) {
                 setCommandPreview(preview);
             }
-            if (result && displayBufferEmpty()) {
+            if (result) {
                 bmsg(result);
             }
             dump();

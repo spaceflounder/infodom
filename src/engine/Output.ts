@@ -1,29 +1,12 @@
 
-import { getVisitTracker, getMarker } from "./DataSystem.ts";
 import { MarkPrint } from "./Mark.ts";
+
 
 // buffer of items awaiting display to next display dump.
 let impBuffer: string[] = [];
 let buffer: string[] = [];
 let postBuffer: string[] = [];
-let firstBuffer = '';
 let commandPreview = '';
-
-
-export function useFirst(content: () => string) {
-
-    const visitTracker = getVisitTracker();
-    const m = getMarker();
-    const f = visitTracker[m] ?? 0;
-    if (f === 0) {
-        const c = content();
-        firstBuffer = c;
-        visitTracker[m] = 1;
-    } else {
-        visitTracker[m] += 1;
-    }
-
-}
 
 
 /**
@@ -32,13 +15,7 @@ export function useFirst(content: () => string) {
  *
  */
 export function imsg(content: string) {
-
-    if (firstBuffer !== '') {
-        content = firstBuffer;
-        firstBuffer = '';
-    }
     impBuffer = [...impBuffer, content];
-    
 }
 
 
@@ -48,13 +25,7 @@ export function imsg(content: string) {
  *
  */
 export function bmsg(content: string) {
-
-    if (firstBuffer !== '') {
-        content = firstBuffer;
-        firstBuffer = '';
-    }
     buffer = [...buffer, content];
-    
 }
 
 
@@ -66,13 +37,7 @@ export function bmsg(content: string) {
  *
  */
 export function pmsg(content: string) {
-
-    if (firstBuffer !== '') {
-        content = firstBuffer;
-        firstBuffer = '';
-    }
     postBuffer = [...postBuffer, content];
-    
 }
 
 
@@ -96,6 +61,15 @@ export function setCommandPreview(p: string) {
 }
 
 
+function getPendingContent() {
+    return `
+        ${impBuffer.join('')}
+        ${buffer.join('')}
+        ${postBuffer.join('')}
+    `;
+}
+
+
 /**
  * dump()
  *
@@ -112,7 +86,8 @@ export function dump() {
         commandHeader.innerHTML = commandPreview;
         div.append(commandHeader);
     }
-    const t = MarkPrint(impBuffer.join() + buffer.join() + postBuffer.join());
+    const content = getPendingContent();
+    const t = MarkPrint(content);
     div.innerHTML += t;
     commandPreview = '';
     impBuffer = [];

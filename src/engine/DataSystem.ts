@@ -12,8 +12,10 @@ let performingNavigation = false;
 let data: GameDataType = {
 
     location: info.firstLocation,
+    timerTracker: {},
     visitTracker: {},
     stateTracker: {},
+    listTracker: {},
     implicitTracker: {},
     data: {},
 
@@ -23,8 +25,10 @@ let data: GameDataType = {
 export function resetData() {
     data = {
         location: info.firstLocation,
+        timerTracker: {},
         visitTracker: {},
         stateTracker: {},
+        listTracker: {},
         implicitTracker: {},
         data: {},    
     }
@@ -89,6 +93,16 @@ export function getVisitTracker() {
 
 export function getImplicitTracker() {
     return data.implicitTracker;
+}
+
+
+export function getTimerTracker() {
+    return data.timerTracker;
+}
+
+
+export function getListTracker() {
+    return data.listTracker;
 }
 
 

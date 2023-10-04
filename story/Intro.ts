@@ -1,36 +1,46 @@
 
-import { useCmd, useFirst, useState } from '@infodom';
-import { useImplicit } from '../src/engine/CommandSystem.ts';
+import { useCmd } from '@infodom';
+import { setTimer, useTimer } from '../src/engine/TimerSystem.ts';
+
 
 export default () => {
 
-    useCmd('dance', `Commence dancing`, () => `
+    useCmd('window', `Look out the window`, () => `
     
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non dapibus lectus. Phasellus venenatis auctor accumsan. Pellentesque arcu justo, consequat non facilisis id, vehicula in libero. Ut mollis arcu nec sem mattis auctor. Cras nisi lorem, fringilla vitae volutpat nec, efficitur blandit elit. Ut eu tempus enim. Aliquam et ante cursus, vehicula ex vel, hendrerit velit. Fusce gravida sapien neque, quis egestas enim congue id. Nam luctus sed tortor at convallis. Nam fringilla nulla non dui dignissim, at cursus metus consequat. Ut commodo purus at massa venenatis, et accumsan orci ornare. Vestibulum quis felis sed nibh lobortis consequat. Quisque porttitor, ipsum vitae mollis aliquam, lectus eros rutrum lorem, finibus sagittis quam dolor ut nibh. Maecenas vestibulum lectus in nisl auctor, tristique porta tortor facilisis.
-
-Etiam molestie, nulla sed imperdiet feugiat, augue est convallis quam, eu imperdiet neque dui at enim. Phasellus tellus turpis, fermentum in vulputate a, convallis et velit. Donec pharetra dolor quis tortor dapibus, sed tristique massa hendrerit. Morbi ac dolor congue, posuere dolor in, vestibulum orci. Nam tincidunt viverra ipsum. Morbi interdum pulvinar diam vitae bibendum. Ut laoreet ornare cursus. Integer eu risus nec orci laoreet convallis. Proin ac elit nunc. Quisque sed blandit ipsum, id blandit diam. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas sem arcu, consectetur non metus non, varius maximus erat. Proin ligula lacus, tincidunt at aliquam quis, posuere nec mi. Integer turpis turpis, ullamcorper laoreet erat in, iaculis bibendum lorem. Maecenas commodo odio eu nunc ultricies, viverra dapibus justo porttitor.
+The Alps drifted by, vanishing gently into the frosty morning haze. I'd already
+fallen for the sweeping vistas of Switzerland; there was no eagerness on my part
+to return to New York.
     
     `)
 
-    useCmd('read', `Read the newspaper`, () => {
+    useCmd('read', `Read the newspaper`, () => `
         
-        useState('foo', () => `foobar!`);
-        return `
-        
-Li'l Abner was funny today.
+The editorial was about politics in Cuba, the Yankees won the world series, and
+Li'l Abner was pretty funny today.
+    
+    `)
 
-    `})
+    setTimer('bird', 2);
 
-    useImplicit(['read'], () => {
-
-        useFirst(() => `blah!`);
-
-        return `You did your reading. `
-    })
+    useTimer('bird', () => `
+    
+A bird smacked unceremoniously into the pane of the window.
+    
+    `)
 
     return `
-    
-This is a test.
+
+## Switzerland 1948
+
+:::dropcap
+The engine tumbled rhythmically down the track. I watched the mountains drift
+by as big pats of snow hit the window.
+:::
+
+:::aside
+If this is your first time playing, welcome! This is a single-word parser game.
+You might type :kbd[read] or :kbd[window] to continue.
+:::
     
     `
 }

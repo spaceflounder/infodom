@@ -1,6 +1,9 @@
 
-export { useCmd, useImplicit } from './src/engine/CommandSystem.ts';
-export { useFirst } from './src/engine/Output.ts';
-export { getState, setState, useState } from './src/engine/DataSystem.ts';
+export { useCmd, useImplicit, useRestricted } from './src/engine/CommandSystem.ts';
+export { getState, setState, useState, useData } from './src/engine/DataSystem.ts';
 export { sendTo } from './src/engine/Navigation.ts';
 export { useUniversal } from './src/engine/UniversalCommand.ts';
+export { addTopic } from './src/engine/Topics.ts';
+export { setTimer, useTimer } from './src/engine/TimerSystem.ts';
+export { useStopList } from './src/engine/List.ts';
+export { useShuffledList } from './src/engine/Scrambler.ts';

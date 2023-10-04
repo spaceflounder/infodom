@@ -5,13 +5,8 @@ import {
     directiveHtml
 } from "https://esm.sh/micromark-extension-directive@3.0.0?bundle"
 
-
-function clean(lines) {
-
-    const l = lines.split('\n\n');
-    return l.map(x => x.trim());
-
-}
+import { buildTopicsContent } from './Topics.ts';
+import { buildRestrictedContent } from './CommandSystem.ts';
 
 
 export function print(content) {
@@ -54,7 +49,7 @@ export function print(content) {
     }
 
 
-    function topics(d) {
+    function topics() {
         const text = buildTopicsContent();
         if (text) {
             this.tag('<div class="tip">');
@@ -64,15 +59,16 @@ export function print(content) {
     }
 
 
-    function chaticon(d) {
+    function materialicon(d) {
+        const icon = d.content;
         this.tag(`<span class="material-symbols-rounded">
-        chat
+        ${icon}
         </span>`);
     }
 
 
-    function restricted(d) {
-        const text = buildRestContent();
+    function restricted() {
+        const text = buildRestrictedContent();
         if (text) {
             this.tag('<div class="tip">');
             this.tag(text);
@@ -85,7 +81,7 @@ export function print(content) {
         htmlExtensions: [directiveHtml({
             dropcap,
             aside,
-            chaticon,
+            materialicon,
             kbd,
             heading,
             topics,
