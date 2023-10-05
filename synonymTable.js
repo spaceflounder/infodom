@@ -5,4 +5,6 @@
 
 export const synonymTable = {
     "help": ["?"],
+    "start": ["creek"],
+    "score": ["$"],
 }

@@ -2,6 +2,7 @@ import { start } from './engine/StartUp.ts';
 import './style.css'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+
     <div class='output' id='output'>
     </div>
 

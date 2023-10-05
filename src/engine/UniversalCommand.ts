@@ -6,7 +6,7 @@ import { sendTo } from "./Navigation.ts";
 
 type ContentKey = keyof typeof contents;
 type VerifyCheckType = (data: any) => boolean | string;
-type CommandActionType = ((data: any) => void | ContentKey) | ContentKey;
+type CommandActionType = ((data: any) => void | string) | ContentKey;
 type UniversalCommandType = {
     keyword: string,
     verify?:
@@ -27,9 +27,7 @@ export function appendUniversalCommands() {
                     sendTo(c.action);
                 } else {
                     const a = c.action(data);
-                    if (typeof a === 'string') {
-                        sendTo(a);
-                    }
+                    return a;
                 }
             });        
         }

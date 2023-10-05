@@ -47,7 +47,9 @@ input {
   outline:0;
   border-radius: 1em;
   padding: 3px;
-  background-color: black;
+  background: linear-gradient(127deg, 
+  black 0%,
+  #0c0c0c 100%);
   font-size: 125%;
 }
 input:focus {
@@ -184,6 +186,7 @@ h4 {
 
 kbd {
     font-family: monospace;
+    font-size: large;
     color: #BE975F;
 }
 
@@ -192,4 +195,15 @@ p {
   margin-top: 0px;
   margin-bottom: 0.2em;
   text-indent: 1.12em;
+}
+
+button.inline-button {
+  border-top-color: #2d2d2d;
+  border-left-color: #3d3d3d;
+  border-radius: 0.5em;
+  background: linear-gradient(127deg, 
+    #0d0d0d 0%,
+    #242424 100%);
+  font-size: large;
+  font-family: 'Libre Baskerville', Georgia, Palatino, Baskerville, Cambria, Cochin, Garamond, Times, "Times New Roman", serif;
 }

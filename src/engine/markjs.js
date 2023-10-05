@@ -33,9 +33,9 @@ export function print(content) {
 
     function kbd(d) {
         const text = d.label;
-        this.tag('<kbd>');
+        this.tag(`<button class='inline-button' onclick='setInpVal("${d.label}")'>`);
         this.tag(text);
-        this.tag('</kbd>');
+        this.tag('</button>');
     }
 
 

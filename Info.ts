@@ -12,7 +12,7 @@ CenturyLink is not all that bad.
 `
 
 export const info: GameInfoType = {
-    title: `Train`,
+    title: `This Cave is Trying to Kill You`,
     helpText,
     firstLocation: 'Intro',
 }

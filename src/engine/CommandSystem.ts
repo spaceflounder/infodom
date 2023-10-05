@@ -5,7 +5,6 @@ import { synonymTable } from "../../synonymTable.js";
 import { info } from "../../Info.ts";
 import { getImplicitTracker, getMarker } from "./DataSystem.ts";
 import { impBufferEmpty, imsg } from "./Output.ts";
-import { appendUniversalCommands } from "./UniversalCommand.ts";
 
 
 let implicitTriggers: string[] = [];
@@ -38,7 +37,6 @@ function getHelpCommand(): CommandType {
 
 export function clearCommandBuffer() {
     commands = [getHelpCommand()];
-    appendUniversalCommands();
     implicitTriggers = [];
     implicitAction = undefined;
 }
@@ -108,7 +106,7 @@ function fuzzyKeyCompare(s1: string, s2: string) {
     if (possibleSynonym) {
         s2 = possibleSynonym;
     }
-    return stringSimilarity(s1, s2) > 0.55;
+    return stringSimilarity(s1, s2) > 0.6;
 
 }
 

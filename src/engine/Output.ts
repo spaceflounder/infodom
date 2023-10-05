@@ -3,9 +3,9 @@ import { MarkPrint } from "./Mark.ts";
 
 
 // buffer of items awaiting display to next display dump.
-let impBuffer: string[] = [];
-let buffer: string[] = [];
-let postBuffer: string[] = [];
+let impBuffer = '';
+let buffer = '';
+let postBuffer = '';
 let commandPreview = '';
 
 
@@ -15,7 +15,7 @@ let commandPreview = '';
  *
  */
 export function imsg(content: string) {
-    impBuffer = [...impBuffer, content];
+    impBuffer = content;
 }
 
 
@@ -25,7 +25,7 @@ export function imsg(content: string) {
  *
  */
 export function bmsg(content: string) {
-    buffer = [...buffer, content];
+    buffer = content;
 }
 
 
@@ -37,22 +37,34 @@ export function bmsg(content: string) {
  *
  */
 export function pmsg(content: string) {
-    postBuffer = [...postBuffer, content];
+    postBuffer = content;
 }
 
 
 export function impBufferEmpty() {
-    return impBuffer.length === 0;
+    return impBuffer === '';
 }
 
 
 export function displayBufferEmpty() {
-    return buffer.length === 0;
+    return buffer === '';
 }
 
 
 export function postBufferEmpty() {
-    return postBuffer.length === 0;
+    return postBuffer === '';
+}
+
+
+export function emptyBuffers() {
+    impBuffer = '';
+    buffer = '';
+    postBuffer = '';
+}
+
+
+export function clearPostBuffer() {
+    postBuffer = '';
 }
 
 
@@ -63,9 +75,9 @@ export function setCommandPreview(p: string) {
 
 function getPendingContent() {
     return `
-        ${impBuffer.join('')}
-        ${buffer.join('')}
-        ${postBuffer.join('')}
+        ${impBuffer}
+        ${buffer}
+        ${postBuffer}
     `;
 }
 
@@ -90,9 +102,9 @@ export function dump() {
     const t = MarkPrint(content);
     div.innerHTML += t;
     commandPreview = '';
-    impBuffer = [];
-    buffer = [];
-    postBuffer = [];
+    impBuffer = '';
+    buffer = '';
+    postBuffer = '';
     p.innerHTML = '';
     e.append(div);
     const position = div.getBoundingClientRect();

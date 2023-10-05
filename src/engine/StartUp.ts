@@ -7,6 +7,7 @@ import { getLocation } from './DataSystem.ts';
 import { sendTo } from './Navigation.ts';
 import { bmsg, dump, setCommandPreview } from "./Output.ts";
 import { handleTimers } from './TimerSystem.ts';
+import { appendUniversalCommands } from "./UniversalCommand.ts";
 
 
 function beginGame() {
@@ -16,6 +17,7 @@ function beginGame() {
     e.innerHTML = '';
     universalListing();
     sendTo(info.firstLocation);
+    appendUniversalCommands();
     dump();
     f.onsubmit = ev => {
         ev.preventDefault();
@@ -28,8 +30,9 @@ function beginGame() {
             const location = getLocation();
             clearCommandBuffer();
             contents[location]();
-            const preview = getPreviewByKeyword(k);
             const result = action();
+            appendUniversalCommands();
+            const preview = getPreviewByKeyword(k);
             if (preview) {
                 setCommandPreview(preview);
             }
