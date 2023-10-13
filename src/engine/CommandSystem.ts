@@ -41,6 +41,7 @@ export function clearCommandBuffer() {
 }
 
 
+
 export function useRestricted(choices: string[], errorMsg?: string) {
     const ignore = getIgnoreUseCommand();
     if (!ignore) {
@@ -191,10 +192,11 @@ export function useCmd(keyword: string, preview: string, action: () => string | 
         preview,
         action
     };
+    const clean = (str: string) => str.toLocaleLowerCase().trim();
     const ignore = getIgnoreUseCommand();
     if (!ignore) {
-        commands = commands.filter(x => x.keyword !== keyword);
-        commands = [...commands, cmd];    
+        commands = commands.filter(x => clean(x.keyword) !== clean(keyword));
+        commands = [...commands, cmd];
     }
 
 }

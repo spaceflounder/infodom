@@ -4,13 +4,17 @@ import { contents } from "../contents.ts";
 import { clearCommandBuffer } from "./CommandSystem.ts";
 import { GameDataType } from "./GameDataType.ts"
 import { stringToHash } from "./Hash.ts";
-import { clearPostBuffer, pmsg } from "./Output.ts";
+import { getIgnoreUseCommand } from "./Navigation.ts";
+import { clearPostBuffer, emptyBuffers, pmsg } from "./Output.ts";
 
 
 //let performingNavigation = false;
 
 
 let data: GameDataType;
+let dataKeyBuffer = '';
+let captureCallback: (() => void | string) | undefined = undefined;
+let captureErr = '';
 
 
 export function resetData() {
@@ -23,6 +27,44 @@ export function resetData() {
         listTracker: {},
         implicitTracker: {},
         data: {},    
+    }
+}
+
+
+export function useCapture(options: {
+    dataKey: string,
+    action: () => void | string,
+    errorMsg: string,
+}) {
+    const ignore = getIgnoreUseCommand();
+    if (!ignore) {
+        dataKeyBuffer = options.dataKey;
+        captureCallback = options.action;
+        captureErr = options.errorMsg;
+    }
+}
+
+
+export function handleCaptureInput(token: string) {
+    if (dataKeyBuffer === '') {
+        return false;
+    } else {
+        if (token === '') {
+            emptyBuffers();
+            pmsg(captureErr);
+            return true;
+        }
+        data.data[dataKeyBuffer] = token;
+        dataKeyBuffer = '';
+        if (captureCallback) {
+            const a = captureCallback();
+            emptyBuffers();
+            if (a) {
+                pmsg(a);
+            }
+            captureCallback = undefined;
+        }
+        return true;
     }
 }
 

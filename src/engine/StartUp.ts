@@ -3,11 +3,12 @@ import { info } from '../../Info.ts';
 import universalListing from '../../universalListing.ts';
 import { contents } from "../contents.ts";
 import { checkImplicitCommands, cleanKeyword, clearCommandBuffer, getActionByKeyword, getPreviewByKeyword } from './CommandSystem.ts';
-import { getLocation, resetData } from './DataSystem.ts';
+import { getLocation, resetData, handleCaptureInput } from './DataSystem.ts';
 import { refreshLocationCommands, sendTo } from './Navigation.ts';
 import { bmsg, dump, setCommandPreview } from "./Output.ts";
 import { handleTimers } from './TimerSystem.ts';
 import { appendUniversalCommands } from "./UniversalCommand.ts";
+
 
 
 function outputToDisplay(k?: string, action?: () => string | void) {
@@ -48,12 +49,17 @@ function beginGame() {
     f.onsubmit = ev => {
         ev.preventDefault();
         const i = <HTMLInputElement>document.getElementById('command-line')!;
-        const k = cleanKeyword(i.value);
-        const action = getActionByKeyword(k);
-        if (action) {
-            outputToDisplay(k, action);
-            i.value = '';
+        const s = handleCaptureInput(i.value.trim());
+        if (!s) {
+            const k = cleanKeyword(i.value);
+            const action = getActionByKeyword(k);
+            if (action) {
+                outputToDisplay(k, action);
+            }    
+        } else {
+            outputToDisplay();
         }
+        i.value = '';
     };
 
 }

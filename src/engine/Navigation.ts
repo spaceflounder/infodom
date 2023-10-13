@@ -85,11 +85,17 @@ export function refreshLocationCommands() {
     }
     ignoreUseCommand = false;
     const enabled = getEnabledLocations();
-    useCmd('places', 'Where can I go?', () => getLocationsList().join(', '));
+    useCmd('places', 'Where can I go?', () => `
+You could type:
+
+${getLocationsList().join(', ')}
+
+`);
     for (const k in listing) {
         const [preview, code, verify] = listing[k];
         const destination = code.toLocaleLowerCase();
-        if (enabled[destination]) {
+        const currentLocation = getLocation();
+        if (enabled[destination] && k !== currentLocation) {
             if (verify) {
                 const data = useData();
                 const v = verify(data);
@@ -110,12 +116,14 @@ export function refreshLocationCommands() {
 
 export function getLocationsList() {
     const l = getEnabledLocations();
-    return Object.keys(l).map(x => x.replaceAll('_', ' '));
+    return Object.keys(l).map(x => `:kbd[${x.replaceAll('_', ' ')}]`);
 }
 
 
 export function enableLocation(location: keyof typeof contents) {
-    const l = getEnabledLocations();
-    const lwr = location.toLocaleLowerCase();
-    l[lwr] = true;
+    if (!ignoreUseCommand) {
+        const l = getEnabledLocations();
+        const lwr = location.toLocaleLowerCase();
+        l[lwr] = true;
+    }
 }
