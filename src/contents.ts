@@ -1,15 +1,15 @@
 
 import Intro from '../story/Intro.ts';
-import Start from '../story/Start.ts';
 import Meadow from '../story/Meadow.ts';
 import Forest from '../story/Forest.ts';
 import Cottage from '../story/Cottage.ts';
-import Cave from '../story/Cave.ts';
+import Cave_Entrance from '../story/Cave_Entrance.ts';
+import Creek from '../story/Creek.ts';
 export const contents = {
 Intro,
-Start,
 Meadow,
 Forest,
 Cottage,
-Cave
+Cave_Entrance,
+Creek
 }

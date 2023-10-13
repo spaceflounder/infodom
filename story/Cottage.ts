@@ -1,8 +1,10 @@
-import { useCmd, useState } from "@infodom";
-import { setState } from "../src/engine/DataSystem.ts";
+import { useCmd, useState, setState, useHeading } from "@infodom";
 
 
 export default () => {
+
+    useHeading(`In the Cottage`);
+
 
     useCmd('pull', `Pull Rug Aside`, () => {
         setState('rug')

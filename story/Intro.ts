@@ -1,7 +1,10 @@
+import { useCmd, useRestricted, sendTo } from "@infodom";
 
 
 export default () => {
 
+    useRestricted(['start', 'help']);
+    useCmd('start', `Begin Game`, () => sendTo('Creek'))
 
     return `
 

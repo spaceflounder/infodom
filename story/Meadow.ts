@@ -1,10 +1,9 @@
-import { useCmd, useData } from "@infodom";
+import { useCmd, useHeading } from "@infodom";
 
 
 export default () => {
 
-    const d = useData();
-    d.cottage = true;
+    useHeading(`In the Meadow`);
 
     useCmd('listen', `Listen to the Creek`, () => `
     

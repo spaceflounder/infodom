@@ -3,14 +3,14 @@ import { contents } from "../contents.ts";
 import { useCmd } from "./CommandSystem.ts";
 import { useData } from "./DataSystem.ts";
 import { sendTo } from "./Navigation.ts";
+import { VerifyCheckType } from "./VerifyCheckType.ts";
+
 
 type ContentKey = keyof typeof contents;
-type VerifyCheckType = (data: any) => boolean | string;
 type CommandActionType = ((data: any) => void | string) | ContentKey;
 type UniversalCommandType = {
     keyword: string,
-    verify?:
-    VerifyCheckType,
+    verify?: VerifyCheckType,
     preview: string,
     action: CommandActionType
 };

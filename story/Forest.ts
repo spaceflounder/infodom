@@ -1,10 +1,9 @@
-import { setState, useData } from "@infodom";
+import { setState, useHeading } from "@infodom";
 
 
 export default () => {
 
-    const d = useData();
-    d.cave = true;
+    useHeading(`The Dense Forest`);
 
     return `
     

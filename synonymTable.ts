@@ -3,8 +3,10 @@
  * synonym for the Help command.
  */
 
-export const synonymTable = {
+import { synonymTableType } from "./src/engine/SynonymTableType.ts";
+
+
+export const synonymTable: synonymTableType = {
     "help": ["?"],
-    "start": ["creek"],
     "score": ["$"],
 }

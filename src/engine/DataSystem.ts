@@ -9,22 +9,14 @@ import { clearPostBuffer, pmsg } from "./Output.ts";
 
 //let performingNavigation = false;
 
-let data: GameDataType = {
 
-    location: info.firstLocation,
-    timerTracker: {},
-    visitTracker: {},
-    stateTracker: {},
-    listTracker: {},
-    implicitTracker: {},
-    data: {},
-
-}
+let data: GameDataType;
 
 
 export function resetData() {
     data = {
         location: info.firstLocation,
+        enabledLocations: {},
         timerTracker: {},
         visitTracker: {},
         stateTracker: {},
@@ -76,6 +68,11 @@ export function setLocation(loc: keyof typeof contents) {
     data.location = loc;
     clearCommandBuffer();
     //performingNavigation = true;
+}
+
+
+export function getEnabledLocations() {
+    return data.enabledLocations;
 }
 
 

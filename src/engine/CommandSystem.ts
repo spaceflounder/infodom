@@ -1,10 +1,11 @@
 
 import { CommandType } from "./CommandType.ts";
 import { stringSimilarity } from "./FuzzyStringCompare.ts";
-import { synonymTable } from "../../synonymTable.js";
-import { info } from "../../Info.ts";
+import { synonymTable } from "../../synonymTable.ts";
 import { getImplicitTracker, getMarker } from "./DataSystem.ts";
 import { impBufferEmpty, imsg } from "./Output.ts";
+import { setCommonDefaultResponse } from "./Common.ts";
+import { getIgnoreUseCommand } from "./Navigation.ts";
 
 
 let implicitTriggers: string[] = [];
@@ -19,6 +20,11 @@ export function cleanKeyword(s: string) {
 }
 
 
+export function printCommands() {
+    console.log(commands);
+}
+
+
 export function getOnlyValidCommands(topics: string[]) {
     return commands.
         filter(x => topics.indexOf(x.keyword) > -1).
@@ -26,35 +32,34 @@ export function getOnlyValidCommands(topics: string[]) {
 }
 
 
-function getHelpCommand(): CommandType {
-    return {
-        keyword: 'help',
-        preview: 'Help',
-        action: () => info.helpText
-    }
-}
-
-
 export function clearCommandBuffer() {
-    commands = [getHelpCommand()];
+    commands = [];
+    restricted = [];
     implicitTriggers = [];
     implicitAction = undefined;
+    setCommonDefaultResponse();
 }
 
 
 export function useRestricted(choices: string[], errorMsg?: string) {
-    restricted = choices;
-    if (!errorMsg) {
-        restrictedErrorMsg = buildRestrictedContent(true);
-    } else {
-        restrictedErrorMsg = errorMsg;
+    const ignore = getIgnoreUseCommand();
+    if (!ignore) {
+        restricted = choices;
+        if (!errorMsg) {
+            restrictedErrorMsg = buildRestrictedContent(true);
+        } else {
+            restrictedErrorMsg = errorMsg;
+        }
     }
 }
 
 
 export function useImplicit(commands: string[], action: () => string | undefined) {
-    implicitTriggers = commands.map(x => cleanKeyword(x));
-    implicitAction = action;
+    const ignore = getIgnoreUseCommand();
+    if (!ignore) {
+        implicitTriggers = commands.map(x => cleanKeyword(x));
+        implicitAction = action;    
+    }
 }
 
 
@@ -113,6 +118,13 @@ function fuzzyKeyCompare(s1: string, s2: string) {
 
 export function getPreviewByKeyword(keyword: string) {
 
+    const cmp = restricted.map(r => fuzzyKeyCompare(r, keyword)).
+    filter(x => x);
+
+    if (cmp.length === 0 && restricted.length > 0) {
+        return undefined;
+    }
+
     const c = commands.filter(x => fuzzyKeyCompare(x.keyword, keyword));
     if (c.length > 0) {
         return c[0].preview;
@@ -123,7 +135,7 @@ export function getPreviewByKeyword(keyword: string) {
 
 
 export function getActionByKeyword(keyword: string) {
-    
+
     const cmp = restricted.map(r => fuzzyKeyCompare(r, keyword)).
         filter(x => x);
 
@@ -179,8 +191,11 @@ export function useCmd(keyword: string, preview: string, action: () => string | 
         preview,
         action
     };
-    commands = commands.filter(x => x.keyword !== keyword);
-    commands = [...commands, cmd];
+    const ignore = getIgnoreUseCommand();
+    if (!ignore) {
+        commands = commands.filter(x => x.keyword !== keyword);
+        commands = [...commands, cmd];    
+    }
 
 }
 

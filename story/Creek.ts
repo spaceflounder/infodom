@@ -1,10 +1,14 @@
-import { useData } from "@infodom";
+import { useLocation, useHeading } from "@infodom";
 
 export default () => {
 
-    const d = useData();
-    d.meadow = true;
-    d.forest = true;
+    useHeading(`By the Creek`);
+
+    useLocation('Creek');
+    useLocation('Meadow');
+    useLocation('Forest');
+
+
 
     return `
 
