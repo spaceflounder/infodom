@@ -1,9 +1,9 @@
-import { setState, useHeading } from "@infodom";
+import { usePlace } from "@infodom";
 
 
 export default () => {
 
-    useHeading(`The Dense Forest`);
+    usePlace(`The Dense Forest`);
 
     return `
     

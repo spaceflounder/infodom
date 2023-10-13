@@ -5,7 +5,7 @@ import { clearCommandBuffer } from "./CommandSystem.ts";
 import { GameDataType } from "./GameDataType.ts"
 import { stringToHash } from "./Hash.ts";
 import { getIgnoreUseCommand } from "./Navigation.ts";
-import { clearPostBuffer, emptyBuffers, pmsg } from "./Output.ts";
+import { bmsg, clearPostBuffer, emptyBuffers, pmsg } from "./Output.ts";
 
 
 //let performingNavigation = false;
@@ -51,7 +51,7 @@ export function handleCaptureInput(token: string) {
     } else {
         if (token === '') {
             emptyBuffers();
-            pmsg(captureErr);
+            bmsg(captureErr);
             return true;
         }
         data.data[dataKeyBuffer] = token;
@@ -60,7 +60,7 @@ export function handleCaptureInput(token: string) {
             const a = captureCallback();
             emptyBuffers();
             if (a) {
-                pmsg(a);
+                bmsg(a);
             }
             captureCallback = undefined;
         }
@@ -85,10 +85,13 @@ export function setState(state: string, location?: keyof typeof contents) {
 
 export function useState(state: string, action: () => string | void) {
     const currentState = getState();
+    const ignore = getIgnoreUseCommand();
     if (currentState === state) {
         const a = action();
         if (a) {
-            pmsg(a);
+            if (!ignore) {
+                pmsg(a);
+            }
         }
     }
 }

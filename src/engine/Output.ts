@@ -3,6 +3,9 @@ import { MarkPrint } from "./Mark.ts";
 
 
 // buffer of items awaiting display to next display dump.
+// imp Buffer is used for implicit action display
+// buffer is used for standard action output
+// post is used for place location desc display
 let impBuffer = '';
 let buffer = '';
 let postBuffer = '';
@@ -51,6 +54,13 @@ export function displayBufferEmpty() {
 }
 
 
+export function allBuffersEmpty() {
+    return (postBuffer === '' &&
+        buffer === '' &&
+        impBuffer === '');
+}
+
+
 export function postBufferEmpty() {
     return postBuffer === '';
 }
@@ -74,10 +84,13 @@ export function setCommandPreview(p: string) {
 
 
 function getPendingContent() {
+    if (buffer === '') {
+        buffer = postBuffer;
+    }
+    postBuffer = '';
     return `
         ${impBuffer}
         ${buffer}
-        ${postBuffer}
     `;
 }
 

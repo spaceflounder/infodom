@@ -1,9 +1,31 @@
-import { useCmd, useState, setState, useHeading } from "@infodom";
+import { useCmd, useState, setState, usePlace } from "@infodom";
+
+
+function pulledRug() {
+
+    useCmd('pull', `Pull Rug Aside`, () => {
+        return `The rug is already pulled.`
+    });
+
+    useCmd('climb', `Climb into the hole`, () => `
+    
+It's a bit slick for anything that ambitious.
+    
+    `)
+
+    return `
+
+The air is stale, musty, as though no-one has set foot in here for years. A
+narrow beam of sunshine manages through the cracked roof, into a dark hole
+where there was once a decayed bit of rug.
+
+    `;
+}
 
 
 export default () => {
 
-    useHeading(`In the Cottage`);
+    usePlace(`In the Cottage`);
 
 
     useCmd('pull', `Pull Rug Aside`, () => {
@@ -12,17 +34,7 @@ export default () => {
     });
 
 
-    useState('rug', () => {
-
-        useCmd('pull', `Pull Rug Aside`, () => {
-            return `The rug is already pulled.`
-        });
-
-        return `
-    
-The carpet is moved.
-    
-    `})
+    useState('rug', pulledRug);
 
     return `
     

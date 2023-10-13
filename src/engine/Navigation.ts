@@ -8,13 +8,15 @@ import { appendUniversalCommands } from "./UniversalCommand.ts";
 import { VerifyCheckType } from "./VerifyCheckType.ts";
 
 
+type locationType = keyof typeof contents;
+
 let listing: {[index: string]: [
     string,
-    keyof typeof contents,
+    locationType,
     VerifyCheckType?
 ]} = {};
 let ignoreUseCommand = false;
-let headerTitleBuffer: (keyof typeof contents) | undefined;
+let headerTitleBuffer: (locationType) | undefined;
 
 
 export function getIgnoreUseCommand() {
@@ -116,14 +118,21 @@ ${getLocationsList().join(', ')}
 
 export function getLocationsList() {
     const l = getEnabledLocations();
-    return Object.keys(l).map(x => `:kbd[${x.replaceAll('_', ' ')}]`);
+    const currentLocation = getLocation();
+    return Object.keys(l).
+        filter(x => x.toLocaleLowerCase() !== currentLocation.toLocaleLowerCase()).
+        map(x => `:kbd[${x.replaceAll('_', ' ')}]`);
 }
 
 
-export function enableLocation(location: keyof typeof contents) {
+export function enableLocation(location: locationType | locationType[]) {
     if (!ignoreUseCommand) {
         const l = getEnabledLocations();
-        const lwr = location.toLocaleLowerCase();
-        l[lwr] = true;
+        if (typeof location === 'string') {
+            const lwr = location.toLocaleLowerCase();
+            l[lwr] = true;    
+        } else {
+            location.map(l => enableLocation(l));
+        }
     }
 }

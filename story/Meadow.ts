@@ -1,11 +1,10 @@
-import { useCmd, useHeading, useLocation } from "@infodom";
-import { useCapture, useData } from "../src/engine/DataSystem.ts";
+import { useCmd, usePlace, openPlace, useCapture, useData } from "@infodom";
 
 
 export default () => {
 
-    useHeading(`In the Meadow`);
-    useLocation('Cottage');
+    usePlace(`The Lovely Meadow`);
+    openPlace('Cottage');
 
     useCmd('listen', `Listen to the Creek`, () => {
         useCapture({

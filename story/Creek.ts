@@ -1,14 +1,14 @@
-import { useLocation, useHeading } from "@infodom";
+import { openPlace, usePlace } from "@infodom";
 
 export default () => {
 
-    useHeading(`By the Creek`);
+    usePlace(`By the Creek`);
 
-    useLocation('Creek');
-    useLocation('Meadow');
-    useLocation('Forest');
-
-
+    openPlace([
+        'Creek',
+        'Meadow',
+        'Forest',
+    ]);
 
     return `
 

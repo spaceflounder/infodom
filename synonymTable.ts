@@ -9,4 +9,5 @@ import { synonymTableType } from "./src/engine/SynonymTableType.ts";
 export const synonymTable: synonymTableType = {
     "help": ["?"],
     "score": ["$"],
+    "examine": ["x"],
 }

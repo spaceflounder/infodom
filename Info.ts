@@ -10,7 +10,7 @@ and the game will choose what to do with that command based on the context of
 your situation. What kind of commands can you type?
 
 :kbd[Look], :kbd[Examine], :kbd[Smell], :kbd[Lick], :kbd[Push], :kbd[Pull],
-:kbd[Climb], :kbd[Dig], :kbd[Take], :kbd[Yell], :kbd[Jump], :kbd[Cut],
+:kbd[Climb], :kbd[Talk], :kbd[Dig], :kbd[Take], :kbd[Yell], :kbd[Jump], :kbd[Cut],
 :kbd[Read] and many more.
 
 Navigate to other places by typing the name of the place. To see what places you
@@ -67,6 +67,7 @@ export const info: GameInfoType = {
         'Pull': [`Pull something`, () => `You can't push anything here.`],
         'Climb': [`Climb anything`, () => `Climbing here won't solve anything.`],
         'Yell': [`Yell`, () => `AAAAAAH!`],
+        'Talk': [`Talk to myself`, () => `You have a very pleasant conversation, then you continue your adventure.`],
         'Dig': [`Dig`, () => `You scratch the ground with your foot.`],
         'Cut': [`Cut anything`, () => `There's nothing here to cut.`],
         'Tie': [`Tie`, () => `You haven't anything to tie.`],

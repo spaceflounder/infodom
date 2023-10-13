@@ -1,7 +1,7 @@
 
 export { useCmd, useImplicit, useRestricted } from './src/engine/CommandSystem.ts';
 export { getState, setState, useState, useData, useCapture } from './src/engine/DataSystem.ts';
-export { sendTo, enableLocation as useLocation, useHeading } from './src/engine/Navigation.ts';
+export { sendTo, enableLocation as openPlace, useHeading as usePlace } from './src/engine/Navigation.ts';
 export { useUniversal } from './src/engine/UniversalCommand.ts';
 export { addTopic } from './src/engine/Topics.ts';
 export { setTimer, useTimer } from './src/engine/TimerSystem.ts';
