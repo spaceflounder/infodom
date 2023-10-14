@@ -1,9 +1,9 @@
 
 import { getTimerTracker } from "./DataSystem.ts";
-import { bmsg } from "./Output.ts";
+import { setSilentMode, tmsg } from "./Output.ts";
 
 
-export function useTimer(name: string, action: () => string | void) {
+export function executeTimedEvent(name: string, action: () => string | void) {
 
     const timerTracker = getTimerTracker();
     const n = name;
@@ -11,14 +11,16 @@ export function useTimer(name: string, action: () => string | void) {
         timerTracker[n] = -1;
         const a = action();
         if (a) {
-            bmsg(a);
+            setSilentMode(false);
+            tmsg(a);
+            setSilentMode(true);
         }
     }
 
 }
 
 
-export function setTimer(name: string, turnCount: number) {
+export function designateTimedEvent(name: string, turnCount: number) {
     
     const timerTracker = getTimerTracker();
     const n = name;

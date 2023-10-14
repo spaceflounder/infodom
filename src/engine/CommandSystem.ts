@@ -3,7 +3,7 @@ import { CommandType } from "./CommandType.ts";
 import { stringSimilarity } from "./FuzzyStringCompare.ts";
 import { synonymTable } from "../../synonymTable.ts";
 import { getImplicitTracker, getMarker } from "./DataSystem.ts";
-import { impBufferEmpty, imsg } from "./Output.ts";
+import { impBufferEmpty, imsg, setSilentMode } from "./Output.ts";
 import { setCommonDefaultResponse } from "./Common.ts";
 import { getIgnoreUseCommand } from "./Navigation.ts";
 
@@ -42,7 +42,7 @@ export function clearCommandBuffer() {
 
 
 
-export function useRestricted(choices: string[], errorMsg?: string) {
+export function addRestrictedKeyCommand(choices: string[], errorMsg?: string) {
     const ignore = getIgnoreUseCommand();
     if (!ignore) {
         restricted = choices;
@@ -55,7 +55,7 @@ export function useRestricted(choices: string[], errorMsg?: string) {
 }
 
 
-export function useImplicit(commands: string[], action: () => string | undefined) {
+export function addImplicitKeyCommand(commands: string[], action: () => string | undefined) {
     const ignore = getIgnoreUseCommand();
     if (!ignore) {
         implicitTriggers = commands.map(x => cleanKeyword(x));
@@ -79,7 +79,9 @@ export function checkImplicitCommands(keyword: string) {
             const a = implicitAction();
             implicitTracker[marker] = true;
             if (a && impBufferEmpty()) {
+                setSilentMode(false);
                 imsg(a);
+                setSilentMode(true);
             }
         }
     }
@@ -185,7 +187,7 @@ export function buildRestrictedContent(useMarkdown = false) {
  * @param {function} action - Action to execute for this command.
  * 
  */
-export function useCmd(keyword: string, preview: string, action: () => string | void) {
+export function addStandardKeyCommand(keyword: string, preview: string, action: () => string | void) {
 
     const cmd: CommandType = {
         keyword,

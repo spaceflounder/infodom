@@ -1,8 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import { contents } from "../contents.ts";
-import { useCmd } from "./CommandSystem.ts";
-import { useData } from "./DataSystem.ts";
-import { sendTo } from "./Navigation.ts";
+import { useCmd, useData, sendTo } from "@infodom";
 import { VerifyCheckType } from "./VerifyCheckType.ts";
 
 
@@ -45,7 +43,7 @@ export function appendUniversalCommands() {
 }
 
 
-export function useUniversal(cmd: UniversalCommandType) {
+export function addUniversalKeyCommand(cmd: UniversalCommandType) {
     const keyword = cmd.keyword;
     commands = commands.filter(x => x.keyword !== keyword);
     commands = [...commands, cmd];

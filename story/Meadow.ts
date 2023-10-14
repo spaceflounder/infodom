@@ -3,7 +3,7 @@ import { useCmd, usePlace, openPlace, useCapture, useData } from "@infodom";
 
 export default () => {
 
-    usePlace(`The Lovely Meadow`);
+    usePlace(`A Lovely Meadow`);
     openPlace('Cottage');
 
     useCmd('listen', `Listen to the Creek`, () => {

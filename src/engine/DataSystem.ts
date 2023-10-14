@@ -5,7 +5,7 @@ import { clearCommandBuffer } from "./CommandSystem.ts";
 import { GameDataType } from "./GameDataType.ts"
 import { stringToHash } from "./Hash.ts";
 import { getIgnoreUseCommand } from "./Navigation.ts";
-import { bmsg, clearPostBuffer, emptyBuffers, pmsg } from "./Output.ts";
+import { bmsg, pmsg, clearPostBuffer, emptyBuffers, setSilentMode, } from "./Output.ts";
 
 
 //let performingNavigation = false;
@@ -31,7 +31,7 @@ export function resetData() {
 }
 
 
-export function useCapture(options: {
+export function functionStateInputMode(options: {
     dataKey: string,
     action: () => void | string,
     errorMsg: string,
@@ -51,7 +51,9 @@ export function handleCaptureInput(token: string) {
     } else {
         if (token === '') {
             emptyBuffers();
+            setSilentMode(false);
             bmsg(captureErr);
+            setSilentMode(true);
             return true;
         }
         data.data[dataKeyBuffer] = token;
@@ -60,7 +62,9 @@ export function handleCaptureInput(token: string) {
             const a = captureCallback();
             emptyBuffers();
             if (a) {
+                setSilentMode(false);
                 bmsg(a);
+                setSilentMode(true);
             }
             captureCallback = undefined;
         }
@@ -69,13 +73,13 @@ export function handleCaptureInput(token: string) {
 }
 
 
-export function getState(): string {
+export function retrieveFunctionState(): string {
     const l = data.location;
     return data.stateTracker[l] ?? 'default';
 }
 
 
-export function setState(state: string, location?: keyof typeof contents) {
+export function designateFunctionState(state: string, location?: keyof typeof contents) {
     const l = location ?? data.location;
     data.stateTracker[l] = state;
     contents[l]();
@@ -83,14 +87,16 @@ export function setState(state: string, location?: keyof typeof contents) {
 }
 
 
-export function useState(state: string, action: () => string | void) {
-    const currentState = getState();
+export function substituteRunFunctionState(state: string, action: () => string | void) {
+    const currentState = retrieveFunctionState();
     const ignore = getIgnoreUseCommand();
     if (currentState === state) {
         const a = action();
         if (a) {
             if (!ignore) {
+                setSilentMode(false);
                 pmsg(a);
+                setSilentMode(true);
             }
         }
     }
@@ -99,7 +105,7 @@ export function useState(state: string, action: () => string | void) {
 
 export function getMarker(v = '') {
     const l = data.location;
-    const s = getState();
+    const s = retrieveFunctionState();
     return stringToHash(`${l}-${s}-${v}`);
 }
 
@@ -142,6 +148,6 @@ export function getListTracker() {
 }
 
 
-export function useData() {
+export function retrieveDataJSObject() {
     return data.data;
 }

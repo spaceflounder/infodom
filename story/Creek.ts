@@ -10,6 +10,7 @@ export default () => {
         'Forest',
     ]);
 
+
     return `
 
 A gentle bit of creek winds through a soft patch of grass. From here you can see

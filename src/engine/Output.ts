@@ -6,10 +6,17 @@ import { MarkPrint } from "./Mark.ts";
 // imp Buffer is used for implicit action display
 // buffer is used for standard action output
 // post is used for place location desc display
+let silentMode = true;
 let impBuffer = '';
 let buffer = '';
+let envBuffer: string[] = [];
 let postBuffer = '';
 let commandPreview = '';
+
+
+export function setSilentMode(b: boolean) {
+    silentMode = b;
+}
 
 
 /**
@@ -18,8 +25,24 @@ let commandPreview = '';
  *
  */
 export function imsg(content: string) {
-    impBuffer = content;
+    if (!silentMode) {
+        impBuffer = content;
+    }
 }
+
+
+
+/**
+ *
+ * Add message to timer buffer. Will not display until next display dump.
+ *
+ */
+export function tmsg(content: string) {
+    if (!silentMode) {
+        envBuffer.push(content);
+    }
+}
+
 
 
 /**
@@ -28,7 +51,9 @@ export function imsg(content: string) {
  *
  */
 export function bmsg(content: string) {
-    buffer = content;
+    if (!silentMode) {
+        buffer = content;
+    }
 }
 
 
@@ -40,7 +65,9 @@ export function bmsg(content: string) {
  *
  */
 export function pmsg(content: string) {
-    postBuffer = content;
+    if (!silentMode) {
+        postBuffer = content;
+    }
 }
 
 
@@ -69,6 +96,7 @@ export function postBufferEmpty() {
 export function emptyBuffers() {
     impBuffer = '';
     buffer = '';
+    envBuffer = [];
     postBuffer = '';
 }
 
@@ -84,6 +112,8 @@ export function setCommandPreview(p: string) {
 
 
 function getPendingContent() {
+    const envDisplay = envBuffer.join('');
+    envBuffer = [];
     if (buffer === '') {
         buffer = postBuffer;
     }
@@ -91,6 +121,7 @@ function getPendingContent() {
     return `
         ${impBuffer}
         ${buffer}
+        ${envDisplay}
     `;
 }
 

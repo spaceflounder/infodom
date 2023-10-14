@@ -34,19 +34,7 @@ export function shuffle(array: any[]): Array<any> {
  * @param {number} odds Likelihood of a true result. The higher the number, the more likely roll will return true.
  * @returns {boolean} Likelihood as a boolean.
  */
-export function roll(odds: number): boolean {
+export function getRandomNumber1to100(odds: number): boolean {
     return (odds >= Math.floor(Math.random() * 100))
-}
-
-
-/**
- * Get one random element of an array.
- * @param {Array} arr Array to pick from.
- * @returns {string} Random element of array.
- */
-export function useShuffledList(arr: string[]): string {
-    const newArr = [...arr]
-    const shuffled = shuffle(newArr)
-    return shuffled[0]
 }
 

@@ -4,10 +4,11 @@ import universalListing from '../../universalListing.ts';
 import { contents } from "../contents.ts";
 import { checkImplicitCommands, cleanKeyword, clearCommandBuffer, getActionByKeyword, getPreviewByKeyword } from './CommandSystem.ts';
 import { getLocation, resetData, handleCaptureInput } from './DataSystem.ts';
-import { refreshLocationCommands, sendTo } from './Navigation.ts';
-import { bmsg, dump, setCommandPreview } from "./Output.ts";
+import { refreshLocationCommands } from './Navigation.ts';
+import { bmsg, dump, setCommandPreview, setSilentMode } from "./Output.ts";
 import { handleTimers } from './TimerSystem.ts';
 import { appendUniversalCommands } from "./UniversalCommand.ts";
+import { sendTo } from '@infodom';
 
 
 
@@ -18,7 +19,9 @@ function outputToDisplay(k?: string, action?: () => string | void) {
     }
     const location = getLocation();
     clearCommandBuffer();
+    setSilentMode(false);
     contents[location]();
+    setSilentMode(true);
     refreshLocationCommands();
     appendUniversalCommands();
 
@@ -31,7 +34,9 @@ function outputToDisplay(k?: string, action?: () => string | void) {
     if (action) {
         const result = action();
         if (result) {
+            setSilentMode(false);
             bmsg(result);
+            setSilentMode(true);
         }    
     }
     dump();

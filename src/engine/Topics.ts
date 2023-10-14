@@ -9,7 +9,7 @@ export function clearTopics() {
 }
 
 
-export function addTopic(topic: string) {
+export function appendRecommendedDiscussionTopic(topic: string) {
     topics = [...new Set([...topics, topic])];
 }
 

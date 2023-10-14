@@ -1,9 +1,26 @@
-import { usePlace } from "@infodom";
+import { roll, useCmd, useEnvMsg, usePlace } from "@infodom";
+
+
+function env() {
+    useEnvMsg(`
+
+An old crow in the branches high above gives a mournful squawk.
+
+    `)
+}
 
 
 export default () => {
 
-    usePlace(`The Dense Forest`);
+    usePlace(`Dense Forest`);
+
+    useCmd('examine', `Examine the flowers`, () => `
+    
+Wildflowers -- mims, marigolds and hardy little moss roses.
+    
+    `)
+
+    roll(25) && env()
 
     return `
     

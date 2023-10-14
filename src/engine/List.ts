@@ -1,8 +1,22 @@
 import { getListTracker } from "./DataSystem.ts";
 import { stringToHash } from "./Hash.ts";
+import { shuffle } from "./Scrambler.ts";
 
 
-export function useStopList(array: string[]) {
+/**
+ * Get one random element of an array.
+ * @param {Array} arr Array to pick from.
+ * @returns {string} Random element of array.
+ */
+export function shuffleStringArrayAndGetFirst(arr: string[]): string {
+    const newArr = [...arr]
+    const shuffled = shuffle(newArr)
+    return shuffled.at(0);
+}
+
+
+
+export function retrieveContentInStopStringArray(array: string[]) {
 
     const first = array[0] ?? 'first string';
     const listTracker = getListTracker();

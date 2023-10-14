@@ -48,7 +48,6 @@ export function print(content) {
         this.tag('</div>');
     }
 
-
     function topics() {
         const text = buildTopicsContent();
         if (text) {

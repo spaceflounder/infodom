@@ -1,6 +1,6 @@
 
 import { info } from "../../Info.ts";
-import { useCmd } from "./CommandSystem.ts";
+import { useCmd } from "@infodom";
 
 
 export function setCommonDefaultResponse() {
