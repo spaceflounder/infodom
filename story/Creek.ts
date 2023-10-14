@@ -1,4 +1,4 @@
-import { openPlace, usePlace } from "@infodom";
+import { openPlace, setTimer, useCmd, usePlace, useState, useTimer } from "@infodom";
 
 export default () => {
 
@@ -9,6 +9,19 @@ export default () => {
         'Meadow',
         'Forest',
     ]);
+
+    useTimer('danceTimer', () => `That dance paid off!`)
+
+
+    useCmd('dance', `Dance about`, () => {
+    
+        setTimer('danceTimer', 1);
+    
+    return `
+    
+My but we're jolly.
+    
+    `})
 
 
     return `

@@ -24,7 +24,7 @@ export function designateTimedEvent(name: string, turnCount: number) {
     
     const timerTracker = getTimerTracker();
     const n = name;
-    if (timerTracker[n] === undefined) {
+    if (timerTracker[n] === undefined || timerTracker[n] === -1) {
         timerTracker[n] = turnCount;
     }
 
