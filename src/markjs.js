@@ -1,9 +1,9 @@
 
-import { micromark } from "https://esm.sh/micromark@3.2.0?bundle"
+import { micromark } from "micromark"
 import {
     directive,
     directiveHtml
-} from "https://esm.sh/micromark-extension-directive@3.0.0?bundle"
+} from "micromark-extension-directive"
 
 
 function clean(lines) {
@@ -24,6 +24,13 @@ export function print(content) {
             .replace('</p>', '');
         this.tag('<div class="drop-cap">');
         this.tag(text);
+        this.tag('</div>');
+    }
+
+    function image(d) {
+        const text = d.label;
+        this.tag('<div class="image">');
+        this.tag(`<img src="${text}" />`);
         this.tag('</div>');
     }
 
@@ -56,31 +63,12 @@ export function print(content) {
     }
 
 
-    function topics(d) {
-        const text = buildTopicsContent();
-        if (text) {
-            this.tag('<div class="tip">');
-            this.tag(text);
-            this.tag('</div>');
-        }
-    }
-
-
-    function chaticon(d) {
+    function chaticon() {
         this.tag(`<span class="material-symbols-rounded">
         chat
         </span>`);
     }
 
-
-    function restricted(d) {
-        const text = buildRestContent();
-        if (text) {
-            this.tag('<div class="tip">');
-            this.tag(text);
-            this.tag('</div>');
-        }
-    }
 
     let s = micromark(content, {
         extensions: [directive()],
@@ -88,10 +76,9 @@ export function print(content) {
             dropcap,
             aside,
             chaticon,
+            image,
             kbd,
             heading,
-            topics,
-            restricted,
         })]
     });
 

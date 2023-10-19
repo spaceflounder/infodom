@@ -1,23 +1,21 @@
-import { sendTo, useCmd, useNav } from "@infodom";
+import { sendTo, useCmd } from "@infodom";
 import CommonResponses from "../src/CommonResponses.ts";
 
 export default () => {
 
-    CommonResponses();
-
-    useNav('up', `To the woods`, () => {
+    useCmd('w', `To the woods`, () => {
         sendTo('InTheDeepWoods')
     });
 
-    useNav('left', `To the village`, () => {
+    useCmd('s', `To the village`, () => {
         sendTo('InTheVillage')
     });
 
-    useNav('right', `To the ocean`, () => {
+    useCmd('a', `To the ocean`, () => {
         sendTo('AtTheOcean')
     });
 
-    useNav('down', `To the meadow`, () => {
+    useCmd('d', `To the meadow`, () => {
         sendTo('InTheMeadow')
     });
 

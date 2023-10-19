@@ -1,4 +1,4 @@
-import { sendTo, useCmd, useNav } from "@infodom";
+import { sendTo, useCmd } from "@infodom";
 
 
 const helpResponse = () => `
@@ -17,15 +17,16 @@ spoken topic for conversation with a game character.
 
 export default function() {
 
-    useNav('up', `Proceed`, () => sendTo('Prologue'));
-    useCmd('?', `Help`, helpResponse);
+    useCmd('z', `Proceed`, () => sendTo('Prologue'));
+    useCmd('!', `Help`, helpResponse);
 
     return `
+
 :::dropcap
-Welcome adventurer! If this is your first time playing, type :kbd[?] or click
-the Help button to get an idea how to play.. Otherwise, hit the Arrow Up key to
+Welcome adventurer! If this is your first time playing, type :kbd[!] or click
+the Help button to get an idea how to play. Otherwise, hit the :kbd[z] key to
 venture into the unknown...
-:::
+:::    
     
     `;
 }

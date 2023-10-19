@@ -32,13 +32,6 @@ function addLocalCommand(id: string) {
 }
 
 
-function fixArrows(c: CommandType) {
-    if (c.id.indexOf('arrow') > -1) {
-        c.id = c.id.replace('arrow', '');
-    }
-}
-
-
 export function hookUseProceed(
     id: string,
     callback: () => void | string
@@ -51,7 +44,6 @@ export function hookUseProceed(
             check: true
         },
     }
-    fixArrows(c);
     addLocalCommand(id);
     commands = commands.filter(x => x.id !== c.id);
     commands = [...commands, c];
@@ -77,7 +69,6 @@ export function hookUseCommand(
             return callback();
         }
     }
-    fixArrows(c);
     addLocalCommand(id);
     commands = commands.filter(x => x.id !== c.id);
     commands = [...commands, c];
@@ -101,7 +92,6 @@ export function hookUseNavCommand(
             navigation: true
         },
     }
-    fixArrows(c);
     addLocalCommand(id);
     commands = commands.filter(x => x.id !== c.id);
     commands = [...commands, c];
@@ -136,7 +126,6 @@ export function hookUseTopicCommand(
             topic: true
         },
     }
-    fixArrows(c);
     addLocalCommand(id);
     commands = commands.filter(x => x.id !== c.id);
     commands = [...commands, c];

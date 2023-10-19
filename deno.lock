@@ -1,12 +1,13 @@
 {
-  "version": "2",
-  "remote": {},
-  "npm": {
+  "version": "3",
+  "packages": {
     "specifiers": {
-      "@types/node": "@types/node@18.16.19",
-      "vite": "vite@4.4.9"
+      "npm:@types/node": "npm:@types/node@18.16.19",
+      "npm:micromark-extension-directive@^3.0.0": "npm:micromark-extension-directive@3.0.0",
+      "npm:micromark@^4.0.0": "npm:micromark@4.0.0",
+      "npm:vite": "npm:vite@4.4.9"
     },
-    "packages": {
+    "npm": {
       "@esbuild/android-arm64@0.18.19": {
         "integrity": "sha512-4+jkUFQxZkQfQOOxfGVZB38YUWHMJX2ihZwF+2nh8m7bHdWXpixiurgGRN3c/KMSwlltbYI0/i929jwBRMFzbA==",
         "dependencies": {}
@@ -95,9 +96,57 @@
         "integrity": "sha512-z69jhyG20Gq4QL5JKPLqUT+eREuqnDAFItLbza4JCmpvUnIlY73YNjd5djlO7kBiiZnvTnJuAbOjIoZIOa1GjA==",
         "dependencies": {}
       },
+      "@types/debug@4.1.9": {
+        "integrity": "sha512-8Hz50m2eoS56ldRlepxSBa6PWEVCtzUo/92HgLc2qTMnotJNIm7xP+UZhyWoYsyOdd5dxZ+NZLb24rsKyFs2ow==",
+        "dependencies": {
+          "@types/ms": "@types/ms@0.7.32"
+        }
+      },
+      "@types/ms@0.7.32": {
+        "integrity": "sha512-xPSg0jm4mqgEkNhowKgZFBNtwoEwF6gJ4Dhww+GFpm3IgtNseHQZ5IqdNwnquZEoANxyDAKDRAdVo4Z72VvD/g==",
+        "dependencies": {}
+      },
       "@types/node@18.16.19": {
         "integrity": "sha512-IXl7o+R9iti9eBW4Wg2hx1xQDig183jj7YLn8F7udNceyfkbn1ZxmzZXuak20gR40D7pIkIY1kYGx5VIGbaHKA==",
         "dependencies": {}
+      },
+      "@types/unist@2.0.8": {
+        "integrity": "sha512-d0XxK3YTObnWVp6rZuev3c49+j4Lo8g4L1ZRm9z5L0xpoZycUPshHgczK5gsUMaZOstjVYYi09p5gYvUtfChYw==",
+        "dependencies": {}
+      },
+      "character-entities-legacy@3.0.0": {
+        "integrity": "sha512-RpPp0asT/6ufRm//AJVwpViZbGM/MkjQFxJccQRHmISF/22NBtsHqAWmL+/pmkPWoIUJdWyeVleTl1wydHATVQ==",
+        "dependencies": {}
+      },
+      "character-entities@2.0.2": {
+        "integrity": "sha512-shx7oQ0Awen/BRIdkjkvz54PnEEI/EjwXDSIZp86/KKdbafHh1Df/RYGBhn4hbe2+uKC9FnT5UCEdyPz3ai9hQ==",
+        "dependencies": {}
+      },
+      "character-reference-invalid@2.0.1": {
+        "integrity": "sha512-iBZ4F4wRbyORVsu0jPV7gXkOsGYjGHPmAyv+HiHG8gi5PtC9KI2j1+v8/tlibRvjoWX027ypmG/n0HtO5t7unw==",
+        "dependencies": {}
+      },
+      "debug@4.3.4": {
+        "integrity": "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==",
+        "dependencies": {
+          "ms": "ms@2.1.2"
+        }
+      },
+      "decode-named-character-reference@1.0.2": {
+        "integrity": "sha512-O8x12RzrUF8xyVcY0KJowWsmaJxQbmy0/EtnNtHRpsOcT7dFk5W598coHqBVpmWo1oQQfsCqfCmkZN5DJrZVdg==",
+        "dependencies": {
+          "character-entities": "character-entities@2.0.2"
+        }
+      },
+      "dequal@2.0.3": {
+        "integrity": "sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==",
+        "dependencies": {}
+      },
+      "devlop@1.1.0": {
+        "integrity": "sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==",
+        "dependencies": {
+          "dequal": "dequal@2.0.3"
+        }
       },
       "esbuild@0.18.19": {
         "integrity": "sha512-ra3CaIKCzJp5bU5BDfrCc0FRqKj71fQi+gbld0aj6lN0ifuX2fWJYPgLVLGwPfA+ruKna+OWwOvf/yHj6n+i0g==",
@@ -130,9 +179,221 @@
         "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
         "dependencies": {}
       },
+      "is-alphabetical@2.0.1": {
+        "integrity": "sha512-FWyyY60MeTNyeSRpkM2Iry0G9hpr7/9kD40mD/cGQEuilcZYS4okz8SN2Q6rLCJ8gbCt6fN+rC+6tMGS99LaxQ==",
+        "dependencies": {}
+      },
+      "is-alphanumerical@2.0.1": {
+        "integrity": "sha512-hmbYhX/9MUMF5uh7tOXyK/n0ZvWpad5caBA17GsC6vyuCqaWliRG5K1qS9inmUhEMaOBIW7/whAnSwveW/LtZw==",
+        "dependencies": {
+          "is-alphabetical": "is-alphabetical@2.0.1",
+          "is-decimal": "is-decimal@2.0.1"
+        }
+      },
+      "is-decimal@2.0.1": {
+        "integrity": "sha512-AAB9hiomQs5DXWcRB1rqsxGUstbRroFOPPVAomNk/3XHR5JyEZChOyTWe2oayKnsSsr/kcGqF+z6yuH6HHpN0A==",
+        "dependencies": {}
+      },
+      "is-hexadecimal@2.0.1": {
+        "integrity": "sha512-DgZQp241c8oO6cA1SbTEWiXeoxV42vlcJxgH+B3hi1AiqqKruZR3ZGF8In3fj4+/y/7rHvlOZLZtgJ/4ttYGZg==",
+        "dependencies": {}
+      },
+      "micromark-core-commonmark@2.0.0": {
+        "integrity": "sha512-jThOz/pVmAYUtkroV3D5c1osFXAMv9e0ypGDOIZuCeAe91/sD6BoE2Sjzt30yuXtwOYUmySOhMas/PVyh02itA==",
+        "dependencies": {
+          "decode-named-character-reference": "decode-named-character-reference@1.0.2",
+          "devlop": "devlop@1.1.0",
+          "micromark-factory-destination": "micromark-factory-destination@2.0.0",
+          "micromark-factory-label": "micromark-factory-label@2.0.0",
+          "micromark-factory-space": "micromark-factory-space@2.0.0",
+          "micromark-factory-title": "micromark-factory-title@2.0.0",
+          "micromark-factory-whitespace": "micromark-factory-whitespace@2.0.0",
+          "micromark-util-character": "micromark-util-character@2.0.1",
+          "micromark-util-chunked": "micromark-util-chunked@2.0.0",
+          "micromark-util-classify-character": "micromark-util-classify-character@2.0.0",
+          "micromark-util-html-tag-name": "micromark-util-html-tag-name@2.0.0",
+          "micromark-util-normalize-identifier": "micromark-util-normalize-identifier@2.0.0",
+          "micromark-util-resolve-all": "micromark-util-resolve-all@2.0.0",
+          "micromark-util-subtokenize": "micromark-util-subtokenize@2.0.0",
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0",
+          "micromark-util-types": "micromark-util-types@2.0.0"
+        }
+      },
+      "micromark-extension-directive@3.0.0": {
+        "integrity": "sha512-61OI07qpQrERc+0wEysLHMvoiO3s2R56x5u7glHq2Yqq6EHbH4dW25G9GfDdGCDYqA21KE6DWgNSzxSwHc2hSg==",
+        "dependencies": {
+          "devlop": "devlop@1.1.0",
+          "micromark-factory-space": "micromark-factory-space@2.0.0",
+          "micromark-factory-whitespace": "micromark-factory-whitespace@2.0.0",
+          "micromark-util-character": "micromark-util-character@2.0.1",
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0",
+          "micromark-util-types": "micromark-util-types@2.0.0",
+          "parse-entities": "parse-entities@4.0.1"
+        }
+      },
+      "micromark-factory-destination@2.0.0": {
+        "integrity": "sha512-j9DGrQLm/Uhl2tCzcbLhy5kXsgkHUrjJHg4fFAeoMRwJmJerT9aw4FEhIbZStWN8A3qMwOp1uzHr4UL8AInxtA==",
+        "dependencies": {
+          "micromark-util-character": "micromark-util-character@2.0.1",
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0",
+          "micromark-util-types": "micromark-util-types@2.0.0"
+        }
+      },
+      "micromark-factory-label@2.0.0": {
+        "integrity": "sha512-RR3i96ohZGde//4WSe/dJsxOX6vxIg9TimLAS3i4EhBAFx8Sm5SmqVfR8E87DPSR31nEAjZfbt91OMZWcNgdZw==",
+        "dependencies": {
+          "devlop": "devlop@1.1.0",
+          "micromark-util-character": "micromark-util-character@2.0.1",
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0",
+          "micromark-util-types": "micromark-util-types@2.0.0"
+        }
+      },
+      "micromark-factory-space@2.0.0": {
+        "integrity": "sha512-TKr+LIDX2pkBJXFLzpyPyljzYK3MtmllMUMODTQJIUfDGncESaqB90db9IAUcz4AZAJFdd8U9zOp9ty1458rxg==",
+        "dependencies": {
+          "micromark-util-character": "micromark-util-character@2.0.1",
+          "micromark-util-types": "micromark-util-types@2.0.0"
+        }
+      },
+      "micromark-factory-title@2.0.0": {
+        "integrity": "sha512-jY8CSxmpWLOxS+t8W+FG3Xigc0RDQA9bKMY/EwILvsesiRniiVMejYTE4wumNc2f4UbAa4WsHqe3J1QS1sli+A==",
+        "dependencies": {
+          "micromark-factory-space": "micromark-factory-space@2.0.0",
+          "micromark-util-character": "micromark-util-character@2.0.1",
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0",
+          "micromark-util-types": "micromark-util-types@2.0.0"
+        }
+      },
+      "micromark-factory-whitespace@2.0.0": {
+        "integrity": "sha512-28kbwaBjc5yAI1XadbdPYHX/eDnqaUFVikLwrO7FDnKG7lpgxnvk/XGRhX/PN0mOZ+dBSZ+LgunHS+6tYQAzhA==",
+        "dependencies": {
+          "micromark-factory-space": "micromark-factory-space@2.0.0",
+          "micromark-util-character": "micromark-util-character@2.0.1",
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0",
+          "micromark-util-types": "micromark-util-types@2.0.0"
+        }
+      },
+      "micromark-util-character@2.0.1": {
+        "integrity": "sha512-3wgnrmEAJ4T+mGXAUfMvMAbxU9RDG43XmGce4j6CwPtVxB3vfwXSZ6KhFwDzZ3mZHhmPimMAXg71veiBGzeAZw==",
+        "dependencies": {
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0",
+          "micromark-util-types": "micromark-util-types@2.0.0"
+        }
+      },
+      "micromark-util-chunked@2.0.0": {
+        "integrity": "sha512-anK8SWmNphkXdaKgz5hJvGa7l00qmcaUQoMYsBwDlSKFKjc6gjGXPDw3FNL3Nbwq5L8gE+RCbGqTw49FK5Qyvg==",
+        "dependencies": {
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0"
+        }
+      },
+      "micromark-util-classify-character@2.0.0": {
+        "integrity": "sha512-S0ze2R9GH+fu41FA7pbSqNWObo/kzwf8rN/+IGlW/4tC6oACOs8B++bh+i9bVyNnwCcuksbFwsBme5OCKXCwIw==",
+        "dependencies": {
+          "micromark-util-character": "micromark-util-character@2.0.1",
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0",
+          "micromark-util-types": "micromark-util-types@2.0.0"
+        }
+      },
+      "micromark-util-combine-extensions@2.0.0": {
+        "integrity": "sha512-vZZio48k7ON0fVS3CUgFatWHoKbbLTK/rT7pzpJ4Bjp5JjkZeasRfrS9wsBdDJK2cJLHMckXZdzPSSr1B8a4oQ==",
+        "dependencies": {
+          "micromark-util-chunked": "micromark-util-chunked@2.0.0",
+          "micromark-util-types": "micromark-util-types@2.0.0"
+        }
+      },
+      "micromark-util-decode-numeric-character-reference@2.0.0": {
+        "integrity": "sha512-pIgcsGxpHEtTG/rPJRz/HOLSqp5VTuIIjXlPI+6JSDlK2oljApusG6KzpS8AF0ENUMCHlC/IBb5B9xdFiVlm5Q==",
+        "dependencies": {
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0"
+        }
+      },
+      "micromark-util-encode@2.0.0": {
+        "integrity": "sha512-pS+ROfCXAGLWCOc8egcBvT0kf27GoWMqtdarNfDcjb6YLuV5cM3ioG45Ys2qOVqeqSbjaKg72vU+Wby3eddPsA==",
+        "dependencies": {}
+      },
+      "micromark-util-html-tag-name@2.0.0": {
+        "integrity": "sha512-xNn4Pqkj2puRhKdKTm8t1YHC/BAjx6CEwRFXntTaRf/x16aqka6ouVoutm+QdkISTlT7e2zU7U4ZdlDLJd2Mcw==",
+        "dependencies": {}
+      },
+      "micromark-util-normalize-identifier@2.0.0": {
+        "integrity": "sha512-2xhYT0sfo85FMrUPtHcPo2rrp1lwbDEEzpx7jiH2xXJLqBuy4H0GgXk5ToU8IEwoROtXuL8ND0ttVa4rNqYK3w==",
+        "dependencies": {
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0"
+        }
+      },
+      "micromark-util-resolve-all@2.0.0": {
+        "integrity": "sha512-6KU6qO7DZ7GJkaCgwBNtplXCvGkJToU86ybBAUdavvgsCiG8lSSvYxr9MhwmQ+udpzywHsl4RpGJsYWG1pDOcA==",
+        "dependencies": {
+          "micromark-util-types": "micromark-util-types@2.0.0"
+        }
+      },
+      "micromark-util-sanitize-uri@2.0.0": {
+        "integrity": "sha512-WhYv5UEcZrbAtlsnPuChHUAsu/iBPOVaEVsntLBIdpibO0ddy8OzavZz3iL2xVvBZOpolujSliP65Kq0/7KIYw==",
+        "dependencies": {
+          "micromark-util-character": "micromark-util-character@2.0.1",
+          "micromark-util-encode": "micromark-util-encode@2.0.0",
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0"
+        }
+      },
+      "micromark-util-subtokenize@2.0.0": {
+        "integrity": "sha512-vc93L1t+gpR3p8jxeVdaYlbV2jTYteDje19rNSS/H5dlhxUYll5Fy6vJ2cDwP8RnsXi818yGty1ayP55y3W6fg==",
+        "dependencies": {
+          "devlop": "devlop@1.1.0",
+          "micromark-util-chunked": "micromark-util-chunked@2.0.0",
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0",
+          "micromark-util-types": "micromark-util-types@2.0.0"
+        }
+      },
+      "micromark-util-symbol@2.0.0": {
+        "integrity": "sha512-8JZt9ElZ5kyTnO94muPxIGS8oyElRJaiJO8EzV6ZSyGQ1Is8xwl4Q45qU5UOg+bGH4AikWziz0iN4sFLWs8PGw==",
+        "dependencies": {}
+      },
+      "micromark-util-types@2.0.0": {
+        "integrity": "sha512-oNh6S2WMHWRZrmutsRmDDfkzKtxF+bc2VxLC9dvtrDIRFln627VsFP6fLMgTryGDljgLPjkrzQSDcPrjPyDJ5w==",
+        "dependencies": {}
+      },
+      "micromark@4.0.0": {
+        "integrity": "sha512-o/sd0nMof8kYff+TqcDx3VSrgBTcZpSvYcAHIfHhv5VAuNmisCxjhx6YmxS8PFEpb9z5WKWKPdzf0jM23ro3RQ==",
+        "dependencies": {
+          "@types/debug": "@types/debug@4.1.9",
+          "debug": "debug@4.3.4",
+          "decode-named-character-reference": "decode-named-character-reference@1.0.2",
+          "devlop": "devlop@1.1.0",
+          "micromark-core-commonmark": "micromark-core-commonmark@2.0.0",
+          "micromark-factory-space": "micromark-factory-space@2.0.0",
+          "micromark-util-character": "micromark-util-character@2.0.1",
+          "micromark-util-chunked": "micromark-util-chunked@2.0.0",
+          "micromark-util-combine-extensions": "micromark-util-combine-extensions@2.0.0",
+          "micromark-util-decode-numeric-character-reference": "micromark-util-decode-numeric-character-reference@2.0.0",
+          "micromark-util-encode": "micromark-util-encode@2.0.0",
+          "micromark-util-normalize-identifier": "micromark-util-normalize-identifier@2.0.0",
+          "micromark-util-resolve-all": "micromark-util-resolve-all@2.0.0",
+          "micromark-util-sanitize-uri": "micromark-util-sanitize-uri@2.0.0",
+          "micromark-util-subtokenize": "micromark-util-subtokenize@2.0.0",
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0",
+          "micromark-util-types": "micromark-util-types@2.0.0"
+        }
+      },
+      "ms@2.1.2": {
+        "integrity": "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==",
+        "dependencies": {}
+      },
       "nanoid@3.3.6": {
         "integrity": "sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==",
         "dependencies": {}
+      },
+      "parse-entities@4.0.1": {
+        "integrity": "sha512-SWzvYcSJh4d/SGLIOQfZ/CoNv6BTlI6YEQ7Nj82oDVnRpwe/Z/F1EMx42x3JAOwGBlCjeCH0BRJQbQ/opHL17w==",
+        "dependencies": {
+          "@types/unist": "@types/unist@2.0.8",
+          "character-entities": "character-entities@2.0.2",
+          "character-entities-legacy": "character-entities-legacy@3.0.0",
+          "character-reference-invalid": "character-reference-invalid@2.0.1",
+          "decode-named-character-reference": "decode-named-character-reference@1.0.2",
+          "is-alphanumerical": "is-alphanumerical@2.0.1",
+          "is-decimal": "is-decimal@2.0.1",
+          "is-hexadecimal": "is-hexadecimal@2.0.1"
+        }
       },
       "picocolors@1.0.0": {
         "integrity": "sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==",
@@ -166,5 +427,6 @@
         }
       }
     }
-  }
+  },
+  "remote": {}
 }

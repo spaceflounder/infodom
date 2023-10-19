@@ -1,4 +1,5 @@
 import { getCommandList } from "./Commands.ts";
+import { detectMobile } from "./DetectMobile.ts";
 import { MarkPrint } from "./Mark.ts";
 import { displayOutput } from "./OutputManager.ts";
 import { CommandType } from "./types/CommandType.ts";
@@ -7,77 +8,91 @@ import { CommandType } from "./types/CommandType.ts";
 let permitInput = true;
 
 
-const arrows: { [key: string]: string }  = {
-    'up': '<span class="material-symbols-rounded">arrow_upward_alt</span>',
-    'down': '<span class="material-symbols-rounded">arrow_downward_alt</span>',
-    'left': '<span class="material-symbols-rounded">arrow_left_alt</span>',
-    'right': '<span class="material-symbols-rounded">arrow_right_alt</span>',
+const graphic: { [key: string]: string }  = {
+    'w': '<span class="material-symbols-rounded">arrow_upward_alt</span>',
+    's': '<span class="material-symbols-rounded">arrow_downward_alt</span>',
+    'a': '<span class="material-symbols-rounded">arrow_left_alt</span>',
+    'd': '<span class="material-symbols-rounded">arrow_right_alt</span>',
+    '1': '<span class="material-symbols-rounded">chat</span>',
+    '2': '<span class="material-symbols-rounded">chat</span>',
+    '3': '<span class="material-symbols-rounded">chat</span>',
+    '4': '<span class="material-symbols-rounded">chat</span>',
+    '5': '<span class="material-symbols-rounded">chat</span>',
+    '6': '<span class="material-symbols-rounded">chat</span>',
+    '7': '<span class="material-symbols-rounded">chat</span>',
+    '8': '<span class="material-symbols-rounded">chat</span>',
+    '9': '<span class="material-symbols-rounded">chat</span>',
+    'z': `<span class="material-symbols-rounded">check_circle</span>`,
+    'c': `<span class="material-symbols-rounded">keyboard_return</span>`,
+    '!': `<span class="material-symbols-rounded">info</span>`,
+    '@': `<span class="material-symbols-rounded">auto_stories</span>`,
+    '#': `<span class="material-symbols-rounded">trophy</span>`,
+    'q': '<span class="material-symbols-rounded">eda</span>',
+    'e': '<span class="material-symbols-rounded">autorenew</span>',
+    'x': '<span class="material-symbols-rounded">visibility</span>'
 };
 
 
-function isNavCommand(c: CommandType) {
-    return (c.options?.navigation) ? true : false;
+function isInTopRow(c: CommandType) {
+    const k = c.id;
+    const keys = '!1234567890';
+    return (keys.indexOf(k) > -1);
 }
 
 
-function isArrowKey(c: CommandType) {
-    return (arrows[c.id]) ? true : false;
+function isInUpperRow(c: CommandType) {
+    const k = c.id;
+    const keys = 'qwe';
+    return (keys.indexOf(k) > -1);
 }
 
 
-function isTopicCommand(c: CommandType) {
-    return (c.options?.topic) ? true : false;
+function isInMiddleRow(c: CommandType) {
+    const k = c.id;
+    const keys = 'asd';
+    return (keys.indexOf(k) > -1);
 }
 
 
-function isCheckCommand(c: CommandType) {
-    return (c.options?.check) ? true : false;
+function isInBottomRow(c: CommandType) {
+    const k = c.id;
+    const keys = 'zxc';
+    return (keys.indexOf(k) > -1);
 }
 
 
-function createCommandKey(c: CommandType) {
+function createCommandKeyIcons(c: CommandType) {
     const element = document.createElement('div');
     const inner = document.createElement('div');
     const k = c.id;
-    if (isTopicCommand(c)) {
-        const second = document.createElement('div');
-        const first = document.createElement('div');
-        second.className = 'command-key';
-        first.className = 'command-key';
-        second.innerHTML = `<span class="material-symbols-rounded">chat</span>`;
-        first.innerHTML = `${k}`;
-        inner.className = 'inner-key-wrapper';
-        inner.append(second);
-        inner.append(first);
-    } else if (isCheckCommand(c)) {
-        const second = document.createElement('div');
-        const first = document.createElement('div');
-        second.className = 'command-key';
-        first.className = 'command-key';
-        second.innerHTML = `<span class="material-symbols-rounded">
-        check_circle
-        </span>`;
-        first.innerHTML = `${k}`;
-        inner.className = 'inner-key-wrapper';
-        inner.append(second);
-        inner.append(first);
-    }
-    else if (isArrowKey(c)) {
-        inner.innerHTML = arrows[k];
-        inner.className = 'command-key';
-    } else if (c.id === 'enter') {
-        inner.innerHTML = `<span class="material-symbols-rounded">
-        keyboard_return
-        </span>`;;
-        inner.className = 'command-key';
-    } else {
-        inner.innerText = k;
-        inner.className = 'command-key';
-    }
+    const second = document.createElement('div');
+    const first = document.createElement('div');
+    second.className = 'command-key';
+    first.className = 'command-key';
+    second.innerHTML = graphic[k];
+    first.innerHTML = `${k}`;
+    inner.className = 'inner-key-wrapper';
+    inner.append(second);
+    inner.append(first);
     element.className = 'command-key-wrapper';
     element.append(inner);
     return element;
 }
+
+
+function createMobileCommandKeyIcons(c: CommandType) {
+    const element = document.createElement('div');
+    const inner = document.createElement('div');
+    const only = document.createElement('div');
+    only.className = 'command-key';
+    only.innerHTML = graphic[c.id];
+    inner.className = 'inner-key-wrapper';
+    inner.append(only);
+    element.className = 'command-key-wrapper';
+    element.append(inner);
+    return element;
+}
+
 
 
 function createCommandPreview(p: string) {
@@ -88,75 +103,63 @@ function createCommandPreview(p: string) {
 }
 
 
-function createCommandWipe(c: CommandType) {
-    const element = document.createElement('button');
-    const k = createCommandKey(c);
-    const p = createCommandPreview(c.preview);
-    element.className = 'command-wrapper-wipe';
-    element.append(k);
-    if (!isCheckCommand(c)) {
-        element.append(p);
-    }
+function createMobileCommandPreview(p: string) {
+    const element = document.createElement('div');
+    element.className = 'mobile-command-preview';
+    element.innerHTML = MarkPrint(p);
     return element;
 }
 
 
-function createCommandFade(c: CommandType, index: number) {
+function createDesktopButton(c: CommandType) {
     const element = document.createElement('button');
-    const k = createCommandKey(c);
+    element.className = 'command-wrapper';
+    const k = createCommandKeyIcons(c);
     const p = createCommandPreview(c.preview);
-    index += 1;
-    const sec = (index * 100) + 500;
-    element.className = 'command-wrapper-fade';
-    element.style.animationDuration = `${sec}ms`;
+    element.onclick = () => executeCommand(c);
     element.append(k);
-    if (!isCheckCommand(c)) {
-        element.append(p);
-    }
+    element.append(p);
     return element;
+}
+
+
+function createMobileButton(c: CommandType) {
+    const element = document.createElement('button');
+    element.className = 'mobile-command-wrapper';
+    const k = createMobileCommandKeyIcons(c);
+    const p = createMobileCommandPreview(c.preview);
+    element.onclick = () => executeCommand(c);
+    element.append(k);
+    element.append(p);
+    return element;
+}
+
+
+function createCommandButton(c: CommandType) {
+    if (detectMobile()) {
+        return createMobileButton(c);
+    } else {
+        return createDesktopButton(c);
+    }
 }
 
 
 function executeCommand(c: CommandType) {
 
-    //wipeAnimation();
     permitInput = false;
-
     const content = c.callback();
     if (content) {
         displayOutput(content);
     }
     refreshInputManager();
     permitInput = true;
-
-    /*
-    setTimeout(() => {
-        const content = c.callback();
-        if (content) {
-            displayOutput(content);
-        }
-       fadeAnimation();
-       setTimeout(() => {
-          refreshInputManager();
-          permitInput = true;
-       }, 1200);
-    }, 450);
-    */
     
 }
 
 
-function createCommandButton(c: CommandType) {
-    const element = document.createElement('button');
-    element.className = 'command-wrapper';
-    const k = createCommandKey(c);
-    const p = createCommandPreview(c.preview);
-    element.onclick = () => executeCommand(c);
-    element.append(k);
-    if (!isCheckCommand(c)) {
-        element.append(p);
-    }
-    return element;
+function sortByKeyOrder(a: CommandType, b:) {
+    const order = `!@#$1234567890qweasdzxc`;
+    return order.indexOf(a.id) - 
 }
 
 
@@ -164,67 +167,28 @@ export function refreshInputManager() {
     const commands = getCommandList();
     const element = document.
         querySelector<HTMLDivElement>('#input-manager-wrapper')!;
+    const topRow = document.createElement('div');
     const upperRow = document.createElement('div');
+    const middleRow = document.createElement('div');
     const lowerRow = document.createElement('div');
-    const navigationButtons = commands.
-        filter(c => isNavCommand(c)).
-        map(c => createCommandButton(c));
-    const actionButtons = commands.
-        filter(c => !isNavCommand(c)).
-        map(c => createCommandButton(c));
-    upperRow.className = 'input-upper-manager-row';
-    lowerRow.className = 'input-lower-manager-row';
+    topRow.className = 'input-manager-row';
+    upperRow.className = 'input-manager-row';
+    middleRow.className = 'input-manager-row';
+    lowerRow.className = 'input-manager-row';
+    commands.filter(isInTopRow).
+        map(c => topRow.appendChild(createCommandButton(c)));
+    commands.filter(isInUpperRow).
+        map(c => upperRow.appendChild(createCommandButton(c)));
+    commands.filter(isInMiddleRow).
+        map(c => middleRow.appendChild(createCommandButton(c)));
+    commands.filter(isInBottomRow).
+        map(c => lowerRow.appendChild(createCommandButton(c)));
     element.innerHTML = '';
-    actionButtons.map(b => upperRow.appendChild(b));
-    navigationButtons.map(b => lowerRow.appendChild(b));
+    element.append(topRow);
     element.append(upperRow);
+    element.append(middleRow);
     element.append(lowerRow);
 }
-
-
-export function fadeAnimation() {
-    const commands = getCommandList();
-    const element = document.
-        querySelector<HTMLDivElement>('#input-manager-wrapper')!;
-    const upperRow = document.createElement('div');
-    const lowerRow = document.createElement('div');
-    const navigationButtons = commands.
-        filter(c => isNavCommand(c)).
-        map((c, index) => createCommandFade(c, index));
-    const actionButtons = commands.
-        filter(c => !isNavCommand(c)).
-        map((c, index) => createCommandFade(c, index));
-    upperRow.className = 'input-upper-anim-row';
-    lowerRow.className = 'input-lower-anim-row';
-    element.innerHTML = '';
-    actionButtons.map(b => upperRow.appendChild(b));
-    navigationButtons.map(b => lowerRow.appendChild(b));
-    element.append(upperRow);
-    element.append(lowerRow);
-}
-
-
-export function wipeAnimation() {
-    const commands = getCommandList();
-    const element = document.
-        querySelector<HTMLDivElement>('#input-manager-wrapper')!;
-    const upperRow = document.createElement('div');
-    const lowerRow = document.createElement('div');
-    const navigationButtons = commands.
-        filter(c => isNavCommand(c)).
-        map(c => createCommandWipe(c));
-    const actionButtons = commands.
-        filter(c => !isNavCommand(c)).
-        map(c => createCommandWipe(c));
-    upperRow.className = 'input-upper-anim-row';
-    lowerRow.className = 'input-lower-anim-row';
-    element.innerHTML = '';
-    actionButtons.map(b => upperRow.appendChild(b));
-    navigationButtons.map(b => lowerRow.appendChild(b));
-    element.append(upperRow);
-    element.append(lowerRow);
-}
-
 
 
 function processKey(c: string) {
@@ -233,7 +197,6 @@ function processKey(c: string) {
     }
     c = c.toLocaleLowerCase();
     c = c.trim();
-    c = c.replace('arrow', '');
     return c;
 }
 

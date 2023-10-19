@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "micromark": "^4.0.0",
+    "micromark-extension-directive": "^3.0.0"
+  }
+}
