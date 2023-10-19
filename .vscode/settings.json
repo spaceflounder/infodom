@@ -2,15 +2,10 @@
     "deno.enable": true,
     "deno.lint": true,
     "deno.unstable": true,
-    "cSpell.words": [
-        "bmsg",
-        "imsg",
-        "infodom",
-        "Jaro",
-        "pmsg",
-        "Winkler"
-    ],
     "editor.rulers": [
-        80,120
+        80, 120
+    ],
+    "cSpell.words": [
+        "infodom"
     ]
 }

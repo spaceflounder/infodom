@@ -5,11 +5,18 @@ import {
     directiveHtml
 } from "https://esm.sh/micromark-extension-directive@3.0.0?bundle"
 
-import { buildTopicsContent } from './Topics.ts';
-import { buildRestrictedContent } from './CommandSystem.ts';
+
+function clean(lines) {
+
+    const l = lines.split('\n');
+    return l.map(x => x.trim()).join('\n');
+
+}
 
 
 export function print(content) {
+
+    content = clean(content);
 
     function dropcap(d) {
         const text = d.content
@@ -33,9 +40,9 @@ export function print(content) {
 
     function kbd(d) {
         const text = d.label;
-        this.tag(`<button class='inline-button' onclick='setInpVal("${d.label}")'>`);
+        this.tag('<kbd>');
         this.tag(text);
-        this.tag('</button>');
+        this.tag('</kbd>');
     }
 
 
@@ -48,7 +55,8 @@ export function print(content) {
         this.tag('</div>');
     }
 
-    function topics() {
+
+    function topics(d) {
         const text = buildTopicsContent();
         if (text) {
             this.tag('<div class="tip">');
@@ -58,16 +66,15 @@ export function print(content) {
     }
 
 
-    function materialicon(d) {
-        const icon = d.content;
+    function chaticon(d) {
         this.tag(`<span class="material-symbols-rounded">
-        ${icon}
+        chat
         </span>`);
     }
 
 
-    function restricted() {
-        const text = buildRestrictedContent();
+    function restricted(d) {
+        const text = buildRestContent();
         if (text) {
             this.tag('<div class="tip">');
             this.tag(text);
@@ -75,17 +82,25 @@ export function print(content) {
         }
     }
 
-    return micromark(content, {
+    let s = micromark(content, {
         extensions: [directive()],
         htmlExtensions: [directiveHtml({
             dropcap,
             aside,
-            materialicon,
+            chaticon,
             kbd,
             heading,
             topics,
             restricted,
         })]
-    });    
+    });
+
+    if (s.length < 60) {
+        s = s.replace('<p>', '')
+        s = s.replace('</p>', '');
+    }
+
+    return s;
+
 }
 

@@ -1,17 +1,15 @@
 
 import Intro from '../story/Intro.ts';
-import Meadow from '../story/Meadow.ts';
-import Forest from '../story/Forest.ts';
-import Cottage from '../story/Cottage.ts';
-import Cave_Entrance from '../story/Cave_Entrance.ts';
-import Creek from '../story/Creek.ts';
-import Tavern from '../story/trebeled/Tavern.ts';
+import Prologue from '../story/Prologue.ts';
+import InTheDeepWoods from '../story/AboveGround/InTheDeepWoods.ts';
+import AtTheOcean from '../story/AboveGround/AtTheOcean.ts';
+import InTheMeadow from '../story/AboveGround/InTheMeadow.ts';
+import InTheVillage from '../story/Skuldearth/InTheVillage.ts';
 export const contents = {
 Intro,
-Meadow,
-Forest,
-Cottage,
-Cave_Entrance,
-Creek,
-Tavern
+Prologue,
+InTheDeepWoods,
+AtTheOcean,
+InTheMeadow,
+InTheVillage
 }

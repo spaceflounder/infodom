@@ -1,21 +1,31 @@
-import { useCmd, useRestricted, sendTo } from "@infodom";
+import { sendTo, useCmd, useNav } from "@infodom";
 
 
-export default () => {
+const helpResponse = () => `
+**This Cave is Trying to Kill You** is a text-based game played with hotkeys.
+If you're playing with
+a keyboard, you can control the story flow by typing keys as displayed
+on the input bar below. If you are using a mouse or touch screen, you can
+tap or click commands on the bar.
 
-    useRestricted(['start', 'help']);
-    useCmd('start', `Begin Game`, () => sendTo('Creek'))
+Each command advances the story by a few sentences. Note that the arrow keys
+are used to move the player character. Commands with a :chaticon icon indicate a
+spoken topic for conversation with a game character.
+
+`;
+
+
+export default function() {
+
+    useNav('up', `Proceed`, () => sendTo('Prologue'));
+    useCmd('?', `Help`, helpResponse);
 
     return `
-
-# This Cave is Trying to Kill You
-
-## a game by spaceflounder
-
-:::aside
-If you've never played this game before, it's strongly recommended you type
-:kbd[help] before you begin. Otherwise, type :kbd[start].
+:::dropcap
+Welcome adventurer! If this is your first time playing, type :kbd[?] or click
+the Help button to get an idea how to play.. Otherwise, hit the Arrow Up key to
+venture into the unknown...
 :::
-
-    `
+    
+    `;
 }

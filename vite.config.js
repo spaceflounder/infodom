@@ -4,7 +4,7 @@ export default {
 
   resolve: {
     alias: {
-      '@infodom': resolve(__dirname, 'infodom.ts'),
+      '@infodom': resolve(__dirname, 'infodom'),
       '#root': resolve(__dirname)
     }
   },
